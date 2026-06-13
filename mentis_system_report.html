@@ -1,0 +1,1478 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mentis 系统架构与运行机制讲解报告</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5d6876;
+      --line: #d8dee8;
+      --panel: #f7f9fc;
+      --panel-2: #eef5f2;
+      --blue: #1f5a91;
+      --green: #2b7655;
+      --red: #a2463d;
+      --gold: #8a6725;
+      --paper: #ffffff;
+      --code: #0f1720;
+      --code-text: #edf2f7;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #edf1f6;
+      font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.62;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 24px auto 56px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 55px rgba(25, 39, 61, 0.08);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 44px 52px 34px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(31, 90, 145, 0.08), rgba(31, 90, 145, 0)),
+        #ffffff;
+    }
+
+    main {
+      padding: 28px 52px 52px;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      line-height: 1.24;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 34px;
+      color: #102033;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-top: 36px;
+      padding-top: 8px;
+      color: #153454;
+      border-top: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 19px;
+      margin-top: 24px;
+      color: #1d415f;
+    }
+
+    h4 {
+      font-size: 16px;
+      margin-top: 18px;
+      color: #244c62;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    ul, ol {
+      margin: 10px 0 10px 24px;
+      padding: 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      border: 1px solid #cbd8e5;
+      background: #f6f9fd;
+      color: #285071;
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 22px;
+      margin: 18px 0 10px;
+      padding: 16px 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .toc a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .callout {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--blue);
+      background: #f5f9fd;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .callout.green {
+      border-left-color: var(--green);
+      background: #f3faf6;
+    }
+
+    .callout.gold {
+      border-left-color: var(--gold);
+      background: #fbf7ec;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      padding: 16px;
+    }
+
+    .card h3,
+    .card h4 {
+      margin-top: 0;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #17324a;
+      text-align: left;
+      font-weight: 650;
+    }
+
+    code {
+      font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.94em;
+      background: #eef2f7;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    pre {
+      margin: 12px 0 18px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      background: var(--code);
+      color: var(--code-text);
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      border: 1px solid #1f2a38;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .figure {
+      margin: 18px 0 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      padding: 16px;
+    }
+
+    .caption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .pipeline-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .step {
+      margin-top: 24px;
+      padding: 18px 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+
+    .step-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .num {
+      display: inline-grid;
+      place-items: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 4px;
+      background: #1f5a91;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin: 12px 0;
+      background: #fbfcfe;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 650;
+      color: #1d415f;
+    }
+
+    .equation {
+      padding: 12px 16px;
+      margin: 12px 0;
+      border: 1px solid #d5e2d9;
+      border-radius: var(--radius);
+      background: #f3faf6;
+      font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+      color: #16442c;
+    }
+
+    .footer-note {
+      margin-top: 38px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 840px) {
+      .page {
+        width: calc(100% - 18px);
+        margin: 9px auto 32px;
+      }
+
+      header,
+      main {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .grid,
+      .grid.three,
+      .toc {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header>
+      <h1>Mentis 系统架构与运行机制讲解报告</h1>
+      <p class="subtitle">Training-free Mental World Model Baseline for Multiple-choice Situated Reasoning</p>
+      <div class="meta">
+        <span class="tag">系统定位: Mental World Model</span>
+        <span class="tag">方法类型: Training-free API-based baseline</span>
+        <span class="tag">核心机制: Counterfactual state transition</span>
+        <span class="tag">输出契约: generated_results JSON</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="abstract">
+        <h2>摘要</h2>
+        <p>
+          Mentis 是一个面向多选情境推理任务的 training-free Mental World Model 基线系统。它的核心目标不是让大模型直接读取题目与选项后选择答案，而是强制模型显式执行一条世界建模链路:
+          从场景解析当前世界状态 <code>s_t</code>，从目标人物视角生成局部观察 <code>o_t</code>，将每个候选动作拆成物理与心理动作成分，再对每个动作分支并行模拟下一时刻状态 <code>s_{t+1}</code>，最后基于模拟出的未来状态进行价值评估并确定 <code>final_action</code>。
+        </p>
+        <div class="callout green">
+          <strong>一句话概括:</strong> Mentis 将多选题求解转化为显式的“状态表示 -> 视角观察 -> 动作分解 -> 反事实状态转移 -> 价值评分 -> 确定性决策”过程，从而把答案建立在可检查的物理与心理状态演化上。
+        </div>
+      </section>
+
+      <nav class="toc" aria-label="目录">
+        <a href="#io">1. 输入与输出数据样式</a>
+        <a href="#overview">2. 系统运行总览</a>
+        <a href="#representations">3. 核心表示设计</a>
+        <a href="#runtime-normalization">4. 运行时字段标准化</a>
+        <a href="#pipeline-detail">5. Pipeline 分步详解</a>
+        <a href="#prompts">6. Prompt 设计总表</a>
+        <a href="#decision">7. 评分与决策规则</a>
+        <a href="#reproducibility">8. 日志、评估与消融</a>
+      </nav>
+
+      <section id="io">
+        <h2>1. 输入与输出数据样式</h2>
+
+        <h3>1.1 输入样本的逻辑结构</h3>
+        <p>
+          Mentis 直接消费验证集 JSON/JSONL 样本。每条样本包含场景、目标人物、问题、候选动作，以及用于离线评估的 golden annotation。主 pipeline 在常规实验中不会读取 golden answer，除非显式打开 oracle ablation。
+        </p>
+
+        <pre><code>{
+  "sample_id": 1,
+  "domain": "dormitory",
+  "domain_category": "residential",
+  "scene": "social_cooperation",
+  "num_of_characters": 2,
+  "story": {
+    "text": "Amy ... must decide what to do next.",
+    "images": ["optional/image/path.jpg"]
+  },
+  "target_agent": "Amy",
+  "question": "Amy wants to finish her watercolor tonight ... What should Amy do next?",
+  "options": [
+    {
+      "option_id": "A",
+      "action_description": "Amy places the water bottle ... asks Lisa to move the bag ..."
+    },
+    {
+      "option_id": "B",
+      "action_description": "Amy yanks Lisa's sports bag off the chair ..."
+    }
+  ],
+  "golden_answer": {
+    "current_state_s_t": {},
+    "target_agent_observation_o_t": {},
+    "next_state_s_{t+1}": {},
+    "score": {},
+    "final_action": "A"
+  }
+}</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>字段</th>
+              <th>作用</th>
+              <th>是否进入主推理链路</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>story.text</code>, <code>story.images</code></td>
+              <td>原始场景输入，可以是文本、图像或二者组合。</td>
+              <td>是，作为 State Parser 的场景信息。</td>
+            </tr>
+            <tr>
+              <td><code>target_agent</code></td>
+              <td>数据集给出的目标人物描述，例如 “Amy”。</td>
+              <td>是，运行时直接以 <code>target_agent</code> 传递。</td>
+            </tr>
+            <tr>
+              <td><code>question</code></td>
+              <td>目标人物需要完成的任务、意图或约束。</td>
+              <td>是，在 scoring 阶段使用。</td>
+            </tr>
+            <tr>
+              <td><code>options</code></td>
+              <td>候选动作集合，通常为 A 到 F 六个动作。</td>
+              <td>是，进入 Target Pseudo Agent 和 Action Parser。</td>
+            </tr>
+            <tr>
+              <td><code>golden_answer</code></td>
+              <td>评估标签，包含标准状态、观察、未来状态、分数和答案。</td>
+              <td>常规主实验不使用，仅评估或 oracle ablation 使用。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>1.2 输出样本的逻辑结构</h3>
+        <p>
+          Mentis 不覆盖原始输入样本，而是在每条样本后追加 <code>generated_results</code>。这样可以同时保留原题、模型中间状态、最终选择和调试信息。
+        </p>
+
+        <pre><code>{
+  "sample_id": "1",
+  "generated_results": {
+    "status": "success",
+    "current_state_s_t": {
+      "physical_state": {},
+      "mental_state": {}
+    },
+    "target_agent_observation_o_t": {
+      "physical_observation": {},
+      "mental_observation": {}
+    },
+    "sampled_actions": [
+      {
+        "option_id": "A",
+        "action_description": "...",
+        "source": "test_options"
+      }
+    ],
+    "candidate_actions": [
+      {
+        "option_id": "A",
+        "raw_action_description": "...",
+        "physical_action_description": "...",
+        "mental_action_description": "..."
+      }
+    ],
+    "next_state_s_{t+1}": {
+      "A": {
+        "physical_state": {},
+        "mental_state": {}
+      }
+    },
+    "score": {
+      "A": {
+        "mentally_consistent": "1",
+        "physically_plausible": "1",
+        "socially_appropriate": "1",
+        "safety_legality_veto": "false",
+        "raw_value_score": "1",
+        "overall_score": "1",
+        "reasoning": "concise rationale"
+      }
+    },
+    "final_action": "A",
+    "decision_trace": {},
+    "metadata": {}
+  }
+}</code></pre>
+
+        <div class="callout">
+          <strong>输出设计的学术意义:</strong> Mentis 输出不仅给答案，还保留 <code>s_t</code>、<code>o_t</code>、每个候选动作的 <code>s_{t+1}</code> 和评分理由。因此可以分析模型到底错在状态理解、视角限制、物理转移、心理转移、价值判断，还是最终决策规则。
+        </div>
+      </section>
+
+      <section id="overview">
+        <h2>2. 系统运行总览</h2>
+        <p>
+          当前 full MWM pipeline 可以表示为以下线性流程。图中每个方块对应当前实现中的一个模块或一个确定性处理步骤。
+        </p>
+
+        <div class="figure">
+          <svg class="pipeline-svg" viewBox="0 0 1220 250" role="img" aria-label="Mentis pipeline overview">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#315b7c"></path>
+              </marker>
+              <style>
+                .box { fill: #f8fbff; stroke: #88a8c5; stroke-width: 1.5; rx: 7; }
+                .box2 { fill: #f3faf6; stroke: #78a88c; stroke-width: 1.5; rx: 7; }
+                .box3 { fill: #fbf7ec; stroke: #b59654; stroke-width: 1.5; rx: 7; }
+                .txt { font-family: Segoe UI, Microsoft YaHei, Arial, sans-serif; font-size: 16px; fill: #17202a; font-weight: 650; }
+                .sub { font-family: Segoe UI, Microsoft YaHei, Arial, sans-serif; font-size: 12px; fill: #566574; }
+                .arr { stroke: #315b7c; stroke-width: 1.6; marker-end: url(#arrow); }
+              </style>
+            </defs>
+
+            <rect class="box" x="20" y="76" width="120" height="84"></rect>
+            <text class="txt" x="80" y="108" text-anchor="middle">Input</text>
+            <text class="sub" x="80" y="132" text-anchor="middle">scene, target</text>
+            <text class="sub" x="80" y="150" text-anchor="middle">question, options</text>
+
+            <line class="arr" x1="140" y1="118" x2="178" y2="118"></line>
+            <rect class="box2" x="180" y="76" width="130" height="84"></rect>
+            <text class="txt" x="245" y="108" text-anchor="middle">State Parser</text>
+            <text class="sub" x="245" y="132" text-anchor="middle">scene -> s_t</text>
+
+            <line class="arr" x1="310" y1="118" x2="348" y2="118"></line>
+            <rect class="box2" x="350" y="76" width="155" height="84"></rect>
+            <text class="txt" x="427" y="104" text-anchor="middle">Observation</text>
+            <text class="txt" x="427" y="124" text-anchor="middle">Generator</text>
+            <text class="sub" x="427" y="148" text-anchor="middle">s_t + target -> o_t</text>
+
+            <line class="arr" x1="505" y1="118" x2="543" y2="118"></line>
+            <rect class="box" x="545" y="76" width="155" height="84"></rect>
+            <text class="txt" x="622" y="104" text-anchor="middle">Target Pseudo</text>
+            <text class="txt" x="622" y="124" text-anchor="middle">Agent</text>
+            <text class="sub" x="622" y="148" text-anchor="middle">options -> actions</text>
+
+            <line class="arr" x1="700" y1="118" x2="738" y2="118"></line>
+            <rect class="box" x="740" y="76" width="140" height="84"></rect>
+            <text class="txt" x="810" y="108" text-anchor="middle">Action Parser</text>
+            <text class="sub" x="810" y="132" text-anchor="middle">a_t -> phy + ment</text>
+
+            <line class="arr" x1="880" y1="118" x2="918" y2="118"></line>
+            <rect class="box2" x="920" y="48" width="150" height="112"></rect>
+            <text class="txt" x="995" y="78" text-anchor="middle">State</text>
+            <text class="txt" x="995" y="99" text-anchor="middle">Transition</text>
+            <text class="sub" x="995" y="123" text-anchor="middle">parallel branches</text>
+            <text class="sub" x="995" y="141" text-anchor="middle">s_t + a_t -> s_t+1</text>
+
+            <line class="arr" x1="1070" y1="104" x2="1108" y2="104"></line>
+            <rect class="box3" x="1110" y="48" width="90" height="112"></rect>
+            <text class="txt" x="1155" y="88" text-anchor="middle">Score</text>
+            <text class="sub" x="1155" y="112" text-anchor="middle">mental</text>
+            <text class="sub" x="1155" y="130" text-anchor="middle">physical</text>
+            <text class="sub" x="1155" y="148" text-anchor="middle">social</text>
+
+            <path class="arr" d="M 1155 160 C 1155 200, 940 214, 780 214"></path>
+            <rect class="box3" x="590" y="178" width="190" height="54"></rect>
+            <text class="txt" x="685" y="202" text-anchor="middle">Decision Module</text>
+            <text class="sub" x="685" y="222" text-anchor="middle">scores -> final_action</text>
+
+            <path class="arr" d="M 590 205 C 410 205, 245 194, 150 166"></path>
+            <text class="sub" x="355" y="226" text-anchor="middle">Output JSON stores all intermediate states and decisions</text>
+          </svg>
+          <div class="caption">图 1. Mentis full MWM pipeline 概览。</div>
+        </div>
+
+        <pre><code>scene -> s_t
+s_t + target_agent -> o_t
+options -> sampled_actions
+sampled_actions -> candidate_actions
+for each action branch:
+  physical_transition: s_t + a_t^phy -> s_{t+1}^phy
+  mental_transition:   s_t + a_t^phy + a_t^ment -> s_{t+1}^ment
+  merge -> s_{t+1}
+(s_t, o_t, action, s_{t+1}, question) -> score
+score table -> deterministic decision -> final_action</code></pre>
+      </section>
+
+      <section id="representations">
+        <h2>3. 核心表示设计</h2>
+
+        <h3>3.1 WorldState: 联合物理与心理状态</h3>
+        <p>
+          Mentis 将当前世界状态统一表示为 JSON 文本状态 <code>WorldState</code>。它包含两个顶层字段: <code>physical_state</code> 和 <code>mental_state</code>。
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <h4>Physical State</h4>
+            <p>描述物体、人物、空间关系、接触关系和环境条件。</p>
+            <pre><code>{
+  "entity_and_attribute": {
+    "objects": [
+      {
+        "intrinsic_property": {"appearance": null},
+        "contextual_attributes": {
+          "position": null,
+          "physical_condition": null,
+          "semantic_content": null
+        }
+      }
+    ],
+    "characters": [
+      {
+        "intrinsic_property": {"appearance": null},
+        "contextual_attributes": {
+          "facial_expression": null,
+          "gaze": null,
+          "body_motion": null,
+          "position": null,
+          "semantic_content": null
+        }
+      }
+    ]
+  },
+  "relations": {
+    "spatial_relations": {
+      "relative_position": [null],
+      "distance": [null],
+      "occlusion": [null]
+    },
+    "contact_relations": [null]
+  },
+  "environment": {}
+}</code></pre>
+          </div>
+
+          <div class="card">
+            <h4>Mental State</h4>
+            <p>描述人物的信念、注意、目标、意图、情绪、偏好、规范、态度和关系。</p>
+            <pre><code>{
+  "mental_entity_and_attribute": {
+    "individual": [
+      {
+        "identity_attributes": {
+          "name": null,
+          "occupation": null
+        },
+        "epistemic_state": {
+          "beliefs": [null],
+          "attention_focus": null
+        },
+        "motivational_state": {
+          "goals": [null],
+          "intentions": [null]
+        },
+        "affective_state": {"emotions": [null]},
+        "normative_state": {
+          "rules": [null],
+          "customs": [null]
+        }
+      }
+    ]
+  },
+  "relations": {
+    "attitudes": {},
+    "role_relations": {}
+  },
+  "atmosphere_of_environment": null
+}</code></pre>
+          </div>
+        </div>
+
+        <h3>3.2 Target Observation: 局部第一人称观察</h3>
+        <p>
+          <code>o_t</code> 使用与 WorldState 相似的 schema，但语义上不是全局状态。它表示 target agent 在当前时刻能够看到、听到、触摸到、定位到，或基于可观察线索合理推断出的信息。
+        </p>
+        <div class="callout gold">
+          <strong>视角约束:</strong> Observation Generator 必须避免“读心式泄漏”。例如，全局 <code>mental_state</code> 中可能包含 Lisa 的真实想法，但 Amy 的 <code>o_t</code> 只能包含 Amy 根据 Lisa 的表情、语言、动作和上下文推断出的 Lisa 心理状态。
+        </div>
+
+        <h3>3.3 CandidateAction: 动作的双通道表示</h3>
+        <p>
+          每个候选动作被拆成物理动作成分和心理/语义动作成分。这一设计让后续 transition 可以分别追踪“动作如何改变物理世界”和“动作如何改变心理世界”。
+        </p>
+        <pre><code>{
+  "option_id": "A",
+  "raw_action_description": "Amy says ... and asks Lisa to move the bag.",
+  "physical_action_description": "Amy speaks, puts the bottle and towel down, waits near the door",
+  "mental_action_description": "Amy politely corrects Lisa's belief and requests help without blame"
+}</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>动作维度</th>
+              <th>含义</th>
+              <th>例子</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>a_t^phy</code></td>
+              <td>身体动作、语音载体、手势、物体操作、直接物理影响。</td>
+              <td>说话、挥手、拿起物体、放下毛巾、指向门口。</td>
+            </tr>
+            <tr>
+              <td><code>a_t^ment</code></td>
+              <td>动作承载的意图、情绪、社交意义、认知控制或信念更新目标。</td>
+              <td>安慰、请求、欺骗、纠正误解、表达友好、威胁。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="runtime-normalization">
+        <h2>4. 运行时字段标准化</h2>
+
+        <h3>4.1 为什么运行时直接使用 <code>target_agent</code></h3>
+        <p>
+          这不是改变数据语义，而是在运行时添加一个更明确的别名。原始数据字段 <code>target_agent</code> 通常是自然语言描述，例如 “Amy” 或 “the boy holding the box”。进入 WorldState 后，系统还可能解析出结构化的角色 ID 或角色条目。为了避免“数据集里的目标人物描述”和“状态 schema 中的角色标识”混淆，pipeline 使用:
+        </p>
+        <pre><code>data["target_agent"]</code></pre>
+        <p>
+          后续模块统一使用 <code>target_agent</code> 来表达“题目指定的目标人物自然语言描述”。它会进入 Observation Generator 和 Scoring Module。
+        </p>
+
+        <h3>4.2 为什么把 <code>story.text/images</code> 整理成 <code>_media_scene</code></h3>
+        <p>
+          <code>_media_scene</code> 是运行时内部字段，用于统一文本、图像、视频输入形态，并解析媒体路径。它不是输出契约的一部分。
+        </p>
+        <pre><code>{
+  "_media_scene": {
+    "text": "scene text ...",
+    "image_paths": ["resolved/path/to/image.jpg"],
+    "video_path": "",
+    "modality": "text" | "images" | "video"
+  }
+}</code></pre>
+        <p>
+          这样 State Parser 和 LLM client 可以用统一格式接收多模态场景，而不需要在每个模块里分别处理 <code>story.text</code>、<code>story.images</code> 或未来可能出现的 video 字段。
+        </p>
+      </section>
+
+      <section id="pipeline-detail">
+        <h2>5. Pipeline 分步详解</h2>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">0</span>
+            <h3>输入标准化</h3>
+          </div>
+          <p>
+            系统首先调用 <code>normalize_record</code> 和 <code>SampleInput.as_runtime_dict()</code>，将输入样本整理成 pipeline 内部格式。该步骤不调用 LLM。
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>处理</th>
+                <th>目的</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>sample_id</code> 转为字符串</td>
+                <td>保证 batch 输出、日志文件和评估索引稳定。</td>
+              </tr>
+              <tr>
+                <td>保留 <code>target_agent</code></td>
+                <td>把输入样本中的目标人物字段直接传给后续模块。</td>
+              </tr>
+              <tr>
+                <td><code>story</code> 整理为 <code>_media_scene</code></td>
+                <td>统一 text/image/video 输入，并解析相对媒体路径。</td>
+              </tr>
+              <tr>
+                <td>保留 <code>golden_answer</code> 但主链路不使用</td>
+                <td>防止答案泄漏，同时支持后续评估。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">1</span>
+            <h3>State Parser: 从场景到 <code>s_t</code></h3>
+          </div>
+          <p>
+            State Parser 负责将当前场景解析为联合世界状态 <code>s_t</code>。它是整个系统的基础，因为后续观察生成、状态转移和评分都依赖这个结构化状态。
+          </p>
+          <table>
+            <tbody>
+              <tr>
+                <th>输入</th>
+                <td>去掉 <code>golden_answer</code> 的样本内容，以及 <code>_media_scene</code> 媒体上下文。</td>
+              </tr>
+              <tr>
+                <th>模型</th>
+                <td><code>parser_model</code>，当前默认配置为 <code>gpt-5.5</code>。</td>
+              </tr>
+              <tr>
+                <th>输出</th>
+                <td><code>WorldState</code>: <code>{"physical_state": ..., "mental_state": ...}</code>。</td>
+              </tr>
+              <tr>
+                <th>验证</th>
+                <td>输出必须通过 <code>WorldState</code> schema 和模板归一化。</td>
+              </tr>
+            </tbody>
+          </table>
+          <details open>
+            <summary>State Parser prompt 结构</summary>
+            <pre><code>Task: Parse multimodal scene into joint physical-mental WorldState
+Return only valid JSON. Do not use markdown. Keep reasoning concise.
+
+You must parse the scene at the current moment into s_t.
+Replace null placeholders with observed or reasonably inferred content.
+If a field cannot be determined from text/images/video, keep that field as null.
+Preserve every key in the template and do not add extra keys.
+
+Use the exact top-level keys physical_state and mental_state.
+Physical state must describe objects, characters, spatial/contact relations, and environment.
+Mental state must describe each character's beliefs, attention, goals, intentions,
+emotions, preferences, norms, attitudes, role relations, and atmosphere.
+
+Strict local state template:
+{WORLD_STATE_TEMPLATE}
+
+Input sample without golden answer:
+{sample}</code></pre>
+          </details>
+          <p>
+            这一 prompt 的关键约束是: 不让模型自由写 narrative，而是强制填充严格模板。这样生成的 <code>s_t</code> 能够被后续模块机械地消费和评估。
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">2</span>
+            <h3>Observation Generator: 从全局状态到目标人物观察 <code>o_t</code></h3>
+          </div>
+          <p>
+            Observation Generator 将全局 <code>s_t</code> 渲染成 target agent 的局部第一人称观察 <code>o_t</code>。这一步体现 Mentis 的 POMDP 式视角限制。
+          </p>
+          <table>
+            <tbody>
+              <tr>
+                <th>输入</th>
+                <td><code>world_state</code> 和 <code>target_agent</code>。</td>
+              </tr>
+              <tr>
+                <th>模型</th>
+                <td><code>world_model</code>，当前默认配置为 <code>gpt-5.5</code>。</td>
+              </tr>
+              <tr>
+                <th>输出</th>
+                <td><code>TargetObservation</code>: <code>{"physical_observation": ..., "mental_observation": ...}</code>。</td>
+              </tr>
+              <tr>
+                <th>核心风险</th>
+                <td>不能把全局隐藏心理状态直接复制给 target agent。</td>
+              </tr>
+            </tbody>
+          </table>
+          <details open>
+            <summary>Observation Generator prompt 结构</summary>
+            <pre><code>Task: Render first-person target observation from global WorldState
+Return only valid JSON. Do not use markdown. Keep reasoning concise.
+
+Input is the current strict WorldState s_t and the dataset's target agent description.
+Return the target agent's observation o_t from that agent's perspective.
+
+physical_observation must include only facts the target can see, hear, touch, locate,
+or otherwise directly perceive at the current moment.
+Hidden, occluded, or unknown physical facts must be null.
+
+mental_observation includes the target agent's own beliefs, goals, intentions,
+emotions, preferences, and norms, plus only cue-supported inferences about other agents.
+Do not copy hidden global mental state as mind reading.
+
+Preserve every key in the template. Do not add extra keys.
+Use only the top-level keys physical_observation and mental_observation.
+
+Strict local observation template:
+{TARGET_OBSERVATION_TEMPLATE}
+
+Dataset target agent description:
+{target_agent}
+
+Current WorldState s_t:
+{world_state}</code></pre>
+          </details>
+        </div>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">3</span>
+            <h3>Target Pseudo Agent: 把选项转成候选动作</h3>
+          </div>
+          <p>
+            Target Pseudo Agent 不调用 LLM，也不生成新的动作。它把数据集中的每个 option 当作 target agent 的一个候选动作分支，转为 <code>SampledAction</code>。
+          </p>
+          <pre><code>OptionInput:
+{
+  "option_id": "A",
+  "action_description": "Amy places the water bottle ..."
+}
+
+SampledAction:
+{
+  "option_id": "A",
+  "action_description": "Amy places the water bottle ...",
+  "source": "test_options"
+}</code></pre>
+          <p>
+            如果候选项数量不是 6，系统不会中断，而是在 metadata 中记录 warning。这保证系统可以支持任意 K 个选项。
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">4</span>
+            <h3>Action Parser: 将动作拆成物理与心理成分</h3>
+          </div>
+          <p>
+            Action Parser 对每个 <code>SampledAction</code> 单独调用一次 LLM，并且这些调用并行执行。它只看当前动作文本，不看 target agent、question、observation 或 state。
+          </p>
+          <div class="callout gold">
+            <strong>设计理由:</strong> 这一步必须保持 action-only。如果 parser 看到了 question 或当前状态，它可能会为了“迎合正确答案”而改写、补全或重排动作，破坏候选动作本身的可比性。
+          </div>
+          <details open>
+            <summary>Action Parser prompt 结构</summary>
+            <pre><code>Task: Parse one candidate action into physical and mental dimensions
+Return only valid JSON. Do not use markdown. Keep reasoning concise.
+
+Input is exactly one natural-language candidate action a_t.
+Use only this action text.
+Do not use target-agent identity, question text, observation, current state, or option correctness.
+Do not add, drop, merge, rank, or rewrite actions.
+
+a_t^phy is the physical execution, physical carrier, or direct physical-world effect.
+It includes bodily movement, object manipulation, speech as sound production,
+gaze, facial expression, gesture, touching, moving, handing an object, pointing, etc.
+
+a_t^ment is the semantic, intention, emotion, cognitive-control, or social component.
+It includes comforting, requesting, threatening, deceiving, persuading, reassuring,
+misleading, expressing friendliness, refusing, or updating someone's belief or goal.
+
+If a dimension is not explicitly present, return an empty string.
+
+Output schema:
+{
+  "a_t^phy": "physical execution/carrier/direct physical effect, or empty string",
+  "a_t^ment": "semantic, intention, emotion, cognitive, or social component, or empty string"
+}
+
+Action a_t:
+{action_description}</code></pre>
+          </details>
+          <table>
+            <thead>
+              <tr>
+                <th>动作文本</th>
+                <th><code>a_t^phy</code></th>
+                <th><code>a_t^ment</code></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>waves</code></td>
+                <td>waves hand</td>
+                <td>空字符串，除非文本说明是在 greeting/warning。</td>
+              </tr>
+              <tr>
+                <td><code>says "Don't worry"</code></td>
+                <td>speaks the sentence</td>
+                <td>reassures the listener</td>
+              </tr>
+              <tr>
+                <td><code>points to the exit and tells him to leave</code></td>
+                <td>points to the exit and speaks</td>
+                <td>directs him to leave</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">5</span>
+            <h3>State Transition: 对每个候选动作模拟未来状态</h3>
+          </div>
+          <p>
+            对于每个候选动作，Mentis 都运行一个独立 branch。branch 内部并行调用 Physical Transition 和 Mental Transition，分别预测 <code>s^{phy}_{t+1}</code> 与 <code>s^{ment}_{t+1}</code>，再由 NextStateMerger 合并为完整 <code>s_{t+1}</code>。
+          </p>
+
+          <div class="figure">
+            <svg class="pipeline-svg" viewBox="0 0 920 250" role="img" aria-label="One option transition branch">
+              <defs>
+                <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#315b7c"></path>
+                </marker>
+                <style>
+                  .b { fill: #f8fbff; stroke: #88a8c5; stroke-width: 1.5; rx: 7; }
+                  .g { fill: #f3faf6; stroke: #78a88c; stroke-width: 1.5; rx: 7; }
+                  .t { font-family: Segoe UI, Microsoft YaHei, Arial, sans-serif; font-size: 15px; fill: #17202a; font-weight: 650; }
+                  .s { font-family: Segoe UI, Microsoft YaHei, Arial, sans-serif; font-size: 12px; fill: #566574; }
+                  .a { stroke: #315b7c; stroke-width: 1.6; marker-end: url(#arrow2); fill: none; }
+                </style>
+              </defs>
+              <rect class="b" x="26" y="92" width="150" height="64"></rect>
+              <text class="t" x="101" y="118" text-anchor="middle">CandidateAction</text>
+              <text class="s" x="101" y="139" text-anchor="middle">a_t^phy + a_t^ment</text>
+
+              <path class="a" d="M 176 122 C 250 122, 250 62, 324 62"></path>
+              <path class="a" d="M 176 122 C 250 122, 250 182, 324 182"></path>
+
+              <rect class="g" x="326" y="30" width="210" height="70"></rect>
+              <text class="t" x="431" y="56" text-anchor="middle">Physical Transition</text>
+              <text class="s" x="431" y="78" text-anchor="middle">s_t + a_t^phy -> s_t+1^phy</text>
+
+              <rect class="g" x="326" y="150" width="210" height="70"></rect>
+              <text class="t" x="431" y="176" text-anchor="middle">Mental Transition</text>
+              <text class="s" x="431" y="198" text-anchor="middle">s_t + a_t^phy + a_t^ment -> s_t+1^ment</text>
+
+              <path class="a" d="M 536 65 C 612 65, 602 120, 666 120"></path>
+              <path class="a" d="M 536 185 C 612 185, 602 130, 666 130"></path>
+
+              <rect class="b" x="668" y="92" width="120" height="64"></rect>
+              <text class="t" x="728" y="118" text-anchor="middle">Merger</text>
+              <text class="s" x="728" y="139" text-anchor="middle">combine states</text>
+
+              <line class="a" x1="788" y1="124" x2="842" y2="124"></line>
+              <rect class="b" x="844" y="92" width="58" height="64"></rect>
+              <text class="t" x="873" y="118" text-anchor="middle">s_t+1</text>
+              <text class="s" x="873" y="139" text-anchor="middle">option</text>
+            </svg>
+            <div class="caption">图 2. 单个候选动作分支内部的状态转移。</div>
+          </div>
+
+          <h4>5.1 Physical Transition</h4>
+          <p>
+            Physical Transition 只更新物理状态，不更新心理状态。它需要判断动作载体是否可执行，以及动作会如何改变物体、人物、空间关系、接触关系和环境。
+          </p>
+          <details open>
+            <summary>Physical Transition prompt 结构</summary>
+            <pre><code>Task: Predict physical state transition for one candidate action
+Return only valid JSON. Do not use markdown. Keep reasoning concise.
+
+Compute s^{phy}_{t+1} from the physical action a^{phy}_t,
+the current physical state s^{phy}_t, and the current mental state s^{ment}_t.
+Use s^{ment}_t only as context for intention, attention, belief, or social constraints
+that affect what physical action is attempted; do not update mental_state here.
+
+Transition procedure:
+identify the physical carrier in physical_action_description,
+check reachability, hand occupancy, affordance, visibility, occlusion,
+collision, contact, containment, support, temporal order, and environmental constraints,
+then update only objects, characters, relations, and environment facts that physically change.
+
+If a^{phy}_t is empty, copy s^{phy}_t unless speech or gesture physically occurs.
+
+Output exactly the strict physical_state schema.
+Do not return physical_state, mental_state, or wrapper keys.
+
+s^phy_t:
+{physical_state}
+
+s^ment_t:
+{mental_state}
+
+CandidateAction:
+{action}</code></pre>
+          </details>
+
+          <h4>5.2 Mental Transition</h4>
+          <p>
+            Mental Transition 只更新心理状态。它从当前物理状态、当前心理状态、物理动作载体和心理动作语义出发，预测人物信念、目标、情绪、关系和社会态度如何变化。
+          </p>
+          <details open>
+            <summary>Mental Transition prompt 结构</summary>
+            <pre><code>Task: Predict mental state transition for one candidate action
+Return only valid JSON. Do not use markdown. Keep reasoning concise.
+
+Compute s^{ment}_{t+1} from the physical action a^{phy}_t,
+the current physical state s^{phy}_t, the mental action a^{ment}_t,
+and the current mental state s^{ment}_t.
+
+This module runs in parallel with the physical transition submodule,
+so do not rely on s^{phy}_{t+1}.
+
+Update beliefs, attention, goals, intentions, emotions, preferences, norms,
+attitudes, role relations, and atmosphere when they are caused by:
+attempted physical carrier, explicit mental/social intent, speech content,
+gesture, deception, reassurance, persuasion, threat, cooperation, or norm violation.
+
+If a^{ment}_t is empty, still update mental_state only when the physical carrier
+would be perceived and naturally change beliefs or emotions.
+Otherwise preserve s^{ment}_t.
+
+Output exactly the strict mental_state schema.
+Do not return physical_state, mental_state, or wrapper keys.
+
+s^phy_t:
+{physical_state}
+
+s^ment_t:
+{mental_state}
+
+CandidateAction:
+{action}</code></pre>
+          </details>
+
+          <h4>5.3 NextStateMerger</h4>
+          <p>
+            合并器不调用模型。full 模式下，它直接将 physical transition 输出的 <code>PhysicalState</code> 和 mental transition 输出的 <code>MentalState</code> 组成下一时刻 <code>WorldState</code>。
+          </p>
+          <pre><code>s_{t+1} = {
+  "physical_state": s^{phy}_{t+1},
+  "mental_state": s^{ment}_{t+1}
+}</code></pre>
+        </div>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">6</span>
+            <h3>Scoring Module: 对每个 imagined branch 评分</h3>
+          </div>
+          <p>
+            Scoring Module 的输入不是单纯的 question 和 options，而是完整反事实分支:
+          </p>
+          <pre><code>(target_agent, question, s_t, o_t, a_t, s_{t+1})</code></pre>
+          <p>
+            它对每个 action branch 输出三个维度分数、一个安全/合法性 veto、本地价值分和最终排序分。
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>评分维度</th>
+                <th>判断问题</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>mentally_consistent</code></td>
+                <td>动作是否符合 target agent 在 <code>o_t</code> 下的目标、信念、意图、情绪和任务约束。</td>
+              </tr>
+              <tr>
+                <td><code>physically_plausible</code></td>
+                <td>动作和模拟出的 <code>s_{t+1}</code> 是否能从 <code>s_t</code> 物理上成立。</td>
+              </tr>
+              <tr>
+                <td><code>socially_appropriate</code></td>
+                <td>动作是否符合当前关系、角色、礼貌、规范、道德和社会场景。</td>
+              </tr>
+              <tr>
+                <td><code>safety_legality_veto</code></td>
+                <td>如果动作或结果严重不安全或违法，直接 veto。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <details open>
+            <summary>Scoring prompt 结构</summary>
+            <pre><code>Task: Evaluate one imagined action branch
+Return only valid JSON. Do not use markdown. Keep reasoning concise.
+
+Use the full tuple:
+(target_agent_description, question, s_t, o_t, a_t, s_t+1)
+to score this single action branch.
+Do not choose the final answer and do not add extra keys.
+
+mentally_consistent evaluates whether the action satisfies the current target agent's goal
+and matches the target agent's mindset/personality under o_t.
+
+physically_plausible evaluates whether the action and imagined s_t+1
+are physically possible from s_t.
+
+socially_appropriate evaluates custom, moral, politeness, role,
+and social norm appropriateness.
+
+safety_legality_veto must be true if the action or resulting state is illegal
+or seriously unsafe; otherwise false.
+
+Output schema:
+{
+  "mentally_consistent": "0.0",
+  "physically_plausible": "0.0",
+  "socially_appropriate": "0.0",
+  "safety_legality_veto": "true/false",
+  "reasoning": "concise rationale"
+}
+
+target_agent_description:
+{target_agent}
+
+question:
+{question}
+
+s_t:
+{world_state}
+
+o_t:
+{observation}
+
+a_t:
+{action}
+
+s_t+1:
+{next_state}</code></pre>
+          </details>
+        </div>
+
+        <div class="step" id="decision">
+          <div class="step-title">
+            <span class="num">7</span>
+            <h3>Decision Module: 从分数到 <code>final_action</code></h3>
+          </div>
+          <p>
+            Decision Module 不调用 LLM。它基于 Scoring Module 的结果进行确定性排序。当前默认权重为:
+          </p>
+          <div class="equation">
+            raw_value_score = 0.45 * mentally_consistent + 0.35 * physically_plausible + 0.20 * socially_appropriate
+          </div>
+          <p>
+            如果 <code>safety_legality_veto = true</code>，则 <code>overall_score = 0.0</code>。否则 <code>overall_score</code> 使用上面的加权分数。LLM 只输出维度分数、veto 和 reasoning；当前实现会在本地计算并写入 <code>raw_value_score</code> 与 <code>overall_score</code>。
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>排序优先级</th>
+                <th>含义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. <code>overall_score</code></td>
+                <td>总分最高者优先。</td>
+              </tr>
+              <tr>
+                <td>2. <code>physical_plausible</code></td>
+                <td>若总分相同，更物理可行的选项优先。</td>
+              </tr>
+              <tr>
+                <td>3. <code>mentally_consistent</code></td>
+                <td>若仍相同，更符合目标人物心理目标的选项优先。</td>
+              </tr>
+              <tr>
+                <td>4. <code>socially_appropriate</code></td>
+                <td>若仍相同，更符合社会规范的选项优先。</td>
+              </tr>
+              <tr>
+                <td>5. <code>option_order</code></td>
+                <td>若完全并列，A/B/C 等顺序靠前者优先。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="step">
+          <div class="step-title">
+            <span class="num">8</span>
+            <h3>输出组装与日志</h3>
+          </div>
+          <p>
+            最后，pipeline 将所有中间结果组装到 <code>GeneratedResults</code> 中，包括当前状态、观察、采样动作、动作分解、每个选项的下一状态、评分表、最终动作、决策 trace 和 metadata。
+          </p>
+          <p>
+            如果某个样本运行失败，系统不会中断整个 batch，而是写出:
+          </p>
+          <pre><code>{
+  "generated_results": {
+    "status": "failed",
+    "error_type": "...",
+    "error_message": "..."
+  }
+}</code></pre>
+          <p>
+            当前配置默认保存 prompt 和 raw LLM output 到 <code>outputs/logs</code>，便于复现实验和错误分析。
+          </p>
+        </div>
+      </section>
+
+      <section id="prompts">
+        <h2>6. Prompt 设计总表</h2>
+        <p>
+          Mentis 的 prompt 设计遵循三条原则: 第一，所有模块返回 JSON；第二，每个模块只完成自己的局部任务；第三，评分必须基于显式状态转移，而不是直接猜答案。
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>模块</th>
+              <th>Prompt 任务</th>
+              <th>输入</th>
+              <th>输出 schema</th>
+              <th>关键防护</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>State Parser</td>
+              <td>Parse multimodal scene into joint physical-mental WorldState</td>
+              <td>样本场景和媒体上下文</td>
+              <td><code>WorldState</code></td>
+              <td>去掉 golden answer，严格模板，不写 markdown。</td>
+            </tr>
+            <tr>
+              <td>Observation Generator</td>
+              <td>Render first-person target observation</td>
+              <td><code>s_t</code>, target agent description</td>
+              <td><code>TargetObservation</code></td>
+              <td>避免 hidden global mental state 泄漏。</td>
+            </tr>
+            <tr>
+              <td>Action Parser</td>
+              <td>Parse one candidate action</td>
+              <td>单条 action text</td>
+              <td><code>{"a_t^phy": ..., "a_t^ment": ...}</code></td>
+              <td>不看题目、不看状态、不改写动作。</td>
+            </tr>
+            <tr>
+              <td>Physical Transition</td>
+              <td>Predict physical state transition</td>
+              <td><code>s_t</code>, action</td>
+              <td><code>PhysicalState</code></td>
+              <td>只更新物理状态，不更新 mental state。</td>
+            </tr>
+            <tr>
+              <td>Mental Transition</td>
+              <td>Predict mental state transition</td>
+              <td><code>s_t</code>, action</td>
+              <td><code>MentalState</code></td>
+              <td>不依赖 <code>s^{phy}_{t+1}</code>，因为二者并行。</td>
+            </tr>
+            <tr>
+              <td>Scoring Module</td>
+              <td>Evaluate one imagined action branch</td>
+              <td><code>s_t</code>, <code>o_t</code>, action, <code>s_{t+1}</code>, question</td>
+              <td><code>ScoreResult</code></td>
+              <td>不直接选择 final answer，只给单分支分数。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>重要边界:</strong> 当前实现将 Value Evaluator 拆成 Scoring Module 和 Decision Module。Scoring Module 是 LLM prompt，Decision Module 是确定性规则。因此最终答案不是模型在 scoring prompt 里直接选择的，而是分数表经过固定规则计算出来的。
+        </div>
+      </section>
+
+      <section id="reproducibility">
+        <h2>7. 日志、评估与消融实验</h2>
+
+        <h3>7.1 默认配置</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>配置项</th>
+              <th>当前默认值</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>models.parser_model</code></td>
+              <td><code>gpt-5.5</code></td>
+              <td>用于 State Parser 和 Action Parser。</td>
+            </tr>
+            <tr>
+              <td><code>models.world_model</code></td>
+              <td><code>gpt-5.5</code></td>
+              <td>用于 Observation Generator、Physical Transition、Mental Transition。</td>
+            </tr>
+            <tr>
+              <td><code>models.scoring_model</code></td>
+              <td><code>gpt-5.5</code></td>
+              <td>用于 Scoring Module。</td>
+            </tr>
+            <tr>
+              <td><code>transition.max_concurrency</code></td>
+              <td><code>6</code></td>
+              <td>候选动作 branch 的最大并发数。</td>
+            </tr>
+            <tr>
+              <td><code>scoring.weights</code></td>
+              <td><code>0.45 / 0.35 / 0.20</code></td>
+              <td>心理目标一致性、物理可行性、社会规范适当性。</td>
+            </tr>
+            <tr>
+              <td><code>--ablation oracle_state / oracle_observation</code></td>
+              <td>显式启用时</td>
+              <td>只有 oracle ablation 会读取对应 gold state 或 gold observation。</td>
+            </tr>
+            <tr>
+              <td><code>logging.save_raw_llm_outputs</code></td>
+              <td><code>true</code></td>
+              <td>保存原始模型输出，便于审查与复现。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>7.2 可支持的消融实验</h3>
+        <p>
+          Mentis 的模块化设计天然支持消融。当前实现包含以下运行模式:
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>模式</th>
+              <th>含义</th>
+              <th>研究问题</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>full_mwm</code></td>
+              <td>完整 Mental World Model pipeline。</td>
+              <td>显式状态建模与反事实模拟的完整能力。</td>
+            </tr>
+            <tr>
+              <td><code>direct_answer_baseline</code></td>
+              <td>直接让模型根据 scene、question 和 options 选择答案。</td>
+              <td>显式 MWM 链路相对直接答题是否更可解释、更稳定。</td>
+            </tr>
+            <tr>
+              <td><code>no_mental_information</code></td>
+              <td>在 scoring/evaluation 输入中隐藏 mental state 和 mental observation。</td>
+              <td>心理信息对动作评分和最终选择有多重要。</td>
+            </tr>
+            <tr>
+              <td><code>no_physical_information</code></td>
+              <td>在 scoring/evaluation 输入中隐藏 physical state 和 physical observation。</td>
+              <td>物理约束与可观察事实对动作评分有多重要。</td>
+            </tr>
+            <tr>
+              <td><code>oracle_state</code></td>
+              <td>使用 <code>golden_answer.current_state_s_t</code> 作为当前状态。</td>
+              <td>隔离状态解析误差，观察后续模块在 gold state 条件下的表现。</td>
+            </tr>
+            <tr>
+              <td><code>oracle_observation</code></td>
+              <td>使用 <code>golden_answer.target_agent_observation_o_t</code> 作为 target observation。</td>
+              <td>隔离观察生成误差，评估动作分解、转移和评分模块的上限。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="closing">
+        <h2>8. 总结</h2>
+        <p>
+          Mentis 的完整运行可以被理解为一种显式反事实模拟框架。对于每个候选动作，系统先构建当前世界状态和目标人物视角，再模拟该动作会造成的物理与心理后果，最后根据这些后果是否符合目标人物意图、物理约束和社会规范进行评分。它的主要优点是中间过程透明、输出可审查、模块可消融，并且能够将错误定位到具体推理阶段。
+        </p>
+        <div class="equation">
+          Input -> s_t -> o_t -> CandidateAction -> s_{t+1} branches -> scores -> final_action
+        </div>
+        <p>
+          因此，Mentis 不是一个“直接答题”系统，而是一个以 Mental World Model 为核心的结构化推理 baseline。
+        </p>
+      </section>
+    </main>
+  </article>
+</body>
+</html>

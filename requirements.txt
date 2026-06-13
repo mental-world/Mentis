@@ -1,0 +1,7 @@
+# Runtime: Python 3.11
+pydantic>=2.0
+openai>=1.0
+PyYAML>=6.0
+Pillow>=10.0
+imageio>=2.0
+imageio-ffmpeg>=0.6

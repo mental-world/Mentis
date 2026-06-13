@@ -1,0 +1,42 @@
+api:
+  provider: "openai"
+  # Set OPENAI_BASE_URL at runtime to use an OpenAI-compatible forwarder.
+  base_url: ""
+  timeout_seconds: 240
+  max_retries: 4
+  max_concurrent_requests: 1
+  template_schema_max_retries: 1
+  pydantic_schema_max_retries: 1
+  retry_initial_delay_seconds: 2.0
+  retry_max_delay_seconds: 60.0
+models:
+  parser_model: "gpt-5.5"
+  world_model: "gpt-5.5"
+  scoring_model: "gpt-5.5"
+  direct_answer_model: "gpt-5.5"
+  judge_model: "gpt-5.5"
+generation:
+  temperature: null
+  max_output_tokens: 30000
+  reasoning_effort: "xhigh"
+  text_verbosity: "high"
+video:
+  enabled: true
+  max_frames: 16
+  frame_sampling: "uniform"
+transition:
+  max_concurrency: 6
+  expected_action_count: 6
+scoring:
+  weights:
+    mentally_consistent: 0.45
+    physically_plausible: 0.35
+    socially_appropriate: 0.2
+  tie_break_order: ["physically_plausible", "mentally_consistent", "socially_appropriate", "option_order"]
+evaluation:
+  llm_judge_enabled: true
+  judge_max_concurrency: 2
+logging:
+  save_raw_llm_outputs: true
+  save_prompts: true
+  output_dir: "outputs/logs"
