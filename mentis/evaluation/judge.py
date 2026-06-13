@@ -41,8 +41,16 @@ async def add_llm_judge_report(
     pred_records: list[dict[str, Any]],
     gold_records: list[dict[str, Any]],
     config: MentisConfig,
+    run_id: str = "",
+    run_manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    judge_report = await judge_predictions(pred_records, gold_records, config)
+    judge_report = await judge_predictions(
+        pred_records,
+        gold_records,
+        config,
+        run_id=run_id,
+        run_manifest=run_manifest,
+    )
     merged = dict(report)
     merged["llm_judge"] = judge_report
     _attach_per_sample_judges(merged, judge_report)
@@ -54,11 +62,16 @@ async def judge_predictions(
     pred_records: list[dict[str, Any]],
     gold_records: list[dict[str, Any]],
     config: MentisConfig,
+    *,
+    run_id: str = "",
+    run_manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     client = create_llm_client(config)
     logger = RunLogger(
         config.logging.output_dir,
         config.logging.save_raw_llm_outputs or config.logging.save_prompts,
+        run_id=run_id,
+        manifest=run_manifest,
     )
     judge = LLMJudge(client, config, logger)
     jobs = _build_jobs(pred_records, gold_records)

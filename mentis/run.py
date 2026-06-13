@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 import re
 
@@ -12,6 +13,7 @@ from mentis.config import load_config
 from mentis.pipeline import MentisPipeline
 from mentis.policies.ablation import ABLATION_CHOICES
 from mentis.utils.json_utils import read_records
+from mentis.utils.tracing import build_readable_run_id, sample_scope_label
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
@@ -55,12 +57,23 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
 async def run_async(args: argparse.Namespace) -> None:
     config = load_config(args.config)
-    pipeline = MentisPipeline(config)
     records, _ = read_records(args.input)
     sample_ids = _sample_id_filter(args.sample_id)
     records = _filter_records_by_sample_ids(records, sample_ids)
     input_base_dir = str(Path(args.input).resolve().parent)
     output_path = resolve_output_path(args.output, config.models.world_model)
+    run_manifest = _prediction_manifest(
+        args=args,
+        config_model=config.models.world_model,
+        output_path=output_path,
+        sample_ids=sample_ids,
+        sample_count=len(records),
+    )
+    pipeline = MentisPipeline(
+        config,
+        run_id=run_manifest["run_id"],
+        run_manifest=run_manifest,
+    )
     output_is_jsonl = output_path.suffix.lower() == ".jsonl"
     with StreamingRecordWriter(output_path, output_is_jsonl, len(records)) as writer:
         for record in records:
@@ -154,6 +167,38 @@ def _filter_records_by_sample_ids(
     return filtered
 
 
+def _prediction_manifest(
+    *,
+    args: argparse.Namespace,
+    config_model: str,
+    output_path: Path,
+    sample_ids: set[str],
+    sample_count: int,
+) -> dict:
+    created_at = datetime.now(timezone.utc).astimezone()
+    scope = sample_scope_label(sample_ids)
+    run_id = build_readable_run_id(
+        run_type="predict",
+        mode=str(args.ablation),
+        model=config_model,
+        sample_scope=scope,
+        created_at=created_at.replace(tzinfo=None),
+    )
+    return {
+        "run_id": run_id,
+        "run_type": "prediction",
+        "ablation": str(args.ablation),
+        "model": config_model,
+        "sample_scope": "all" if not sample_ids else "selected",
+        "sample_count": sample_count,
+        "sample_ids": None if not sample_ids else sorted(sample_ids, key=_sample_sort_key),
+        "input": str(args.input),
+        "output": str(output_path),
+        "config": str(args.config),
+        "created_at": created_at.isoformat(timespec="seconds"),
+    }
+
+
 def _slug_parts(text: str) -> list[str]:
     parts = [part for part in re.split(r"[^A-Za-z0-9]+", text) if part]
     return [_format_slug_part(part) for part in parts] or ["MODEL"]
@@ -161,6 +206,10 @@ def _slug_parts(text: str) -> list[str]:
 
 def _format_slug_part(part: str) -> str:
     return part.lower()
+
+
+def _sample_sort_key(sample_id: str) -> tuple[int, object]:
+    return (0, int(sample_id)) if sample_id.isdigit() else (1, sample_id)
 
 
 def main() -> None:

@@ -593,11 +593,32 @@ Oracle ablation 如果缺少所需 gold 字段，会返回失败样本。
 
 ## 13. 日志与 metadata
 
-每次 pipeline 初始化会创建一个 `run_id`。如果日志开启，LLM 调用写入：
+每次 prediction 或 evaluation judge 初始化会创建一个可读 `run_id`。如果日志开启，LLM 调用写入：
 
 ```text
-outputs/logs/<run_id>/<sample_id>_llm_calls.jsonl
+outputs/logs/<readable_run_id>/<sample_id>_llm_calls.jsonl
 ```
+
+Prediction run id 形如：
+
+```text
+predict_<ablation>_<world_model>_<sample_scope>_<timestamp>
+```
+
+Evaluation judge run id 形如：
+
+```text
+eval_judge_<judge_model>_<sample_scope>_<timestamp>
+```
+
+示例：
+
+```text
+outputs/logs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614-013614/
+outputs/logs/eval_judge_gpt5_5_all_20260614-014407/
+```
+
+如果跑全部样本，`sample_scope` 使用 `all`；如果只跑部分样本，使用 `samples-1-51-76` 这类短标签。每个 log 目录还会写入 `run_manifest.json`，记录 run type、模型、样本范围、输入/输出路径、config 路径和时间戳。
 
 每条日志包含：
 

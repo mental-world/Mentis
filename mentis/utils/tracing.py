@@ -5,17 +5,37 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from datetime import datetime
 from typing import Any
 from uuid import uuid4
 
 
 class RunLogger:
-    def __init__(self, output_dir: str, enabled: bool = True, run_id: str = "") -> None:
+    def __init__(
+        self,
+        output_dir: str,
+        enabled: bool = True,
+        run_id: str = "",
+        manifest: dict[str, Any] | None = None,
+    ) -> None:
         self.run_id = run_id or uuid4().hex[:12]
         self.output_dir = Path(output_dir) / self.run_id
         self.enabled = enabled
         if enabled:
             self.output_dir.mkdir(parents=True, exist_ok=True)
+            if manifest is not None:
+                self.write_manifest(manifest)
+
+    def write_manifest(self, manifest: dict[str, Any]) -> None:
+        if not self.enabled:
+            return
+        record = dict(manifest)
+        record["run_id"] = self.run_id
+        path = self.output_dir / "run_manifest.json"
+        path.write_text(
+            json.dumps(record, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
 
     def log_llm_call(
         self,
@@ -90,3 +110,65 @@ def sum_token_usage(items: Any) -> dict[str, Any]:
             elif key not in total:
                 total[key] = value
     return total
+
+
+def build_readable_run_id(
+    *,
+    run_type: str,
+    mode: str,
+    model: str,
+    sample_scope: str,
+    created_at: datetime | None = None,
+) -> str:
+    timestamp = (created_at or datetime.now()).strftime("%Y%m%d-%H%M%S")
+    return "_".join(
+        [
+            safe_slug(run_type),
+            safe_slug(mode),
+            model_slug(model),
+            safe_slug(sample_scope, allow_hyphen=True),
+            timestamp,
+        ]
+    )
+
+
+def sample_scope_label(sample_ids: list[str] | set[str] | tuple[str, ...]) -> str:
+    if not sample_ids:
+        return "all"
+    ordered = sorted({str(sample_id) for sample_id in sample_ids}, key=_sample_sort_key)
+    return "samples-" + "-".join(ordered)
+
+
+def model_slug(value: Any) -> str:
+    text = str(value or "").strip().lower()
+    if not text:
+        return "model"
+    if text.startswith("gpt-"):
+        return "gpt" + "_".join(_slug_parts(text[4:]))
+    return "_".join(_slug_parts(text))
+
+
+def safe_slug(value: Any, *, allow_hyphen: bool = False) -> str:
+    text = str(value or "").strip().lower()
+    chars = []
+    previous_sep = False
+    for char in text:
+        if char.isalnum():
+            chars.append(char)
+            previous_sep = False
+        elif allow_hyphen and char == "-":
+            chars.append(char)
+            previous_sep = False
+        elif not previous_sep:
+            chars.append("_")
+            previous_sep = True
+    slug = "".join(chars).strip("_")
+    return slug or "unknown"
+
+
+def _slug_parts(text: str) -> list[str]:
+    return [part for part in safe_slug(text).split("_") if part] or ["model"]
+
+
+def _sample_sort_key(sample_id: str) -> tuple[int, Any]:
+    return (0, int(sample_id)) if sample_id.isdigit() else (1, sample_id)

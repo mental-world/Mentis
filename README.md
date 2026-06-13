@@ -359,10 +359,29 @@ logging:
 If logging is enabled, each run writes LLM traces to:
 
 ```text
-outputs/logs/<run_id>/<sample_id>_llm_calls.jsonl
+outputs/logs/<readable_run_id>/<sample_id>_llm_calls.jsonl
 ```
 
-Each trace includes the prompt, raw output, parsed JSON, model, latency, token usage, request metadata, and warnings. Prediction files also summarize module metadata under `generated_results.metadata`.
+Prediction run ids use:
+
+```text
+predict_<ablation>_<world_model>_<sample_scope>_<timestamp>
+```
+
+Evaluation judge run ids use:
+
+```text
+eval_judge_<judge_model>_<sample_scope>_<timestamp>
+```
+
+Examples:
+
+```text
+outputs/logs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614-013614/
+outputs/logs/eval_judge_gpt5_5_all_20260614-014407/
+```
+
+Each log directory also contains `run_manifest.json` with the run type, model, sample ids or `all`, input/output paths, config path, and timestamp. Each trace includes the prompt, raw output, parsed JSON, model, latency, token usage, request metadata, and warnings. Prediction files also summarize module metadata under `generated_results.metadata`.
 
 ## Citation
 

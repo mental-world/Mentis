@@ -90,12 +90,20 @@ class BranchResult:
 
 
 class MentisPipeline:
-    def __init__(self, config: MentisConfig) -> None:
+    def __init__(
+        self,
+        config: MentisConfig,
+        *,
+        run_id: str = "",
+        run_manifest: dict[str, Any] | None = None,
+    ) -> None:
         self.config = config
         self.client = create_llm_client(config)
         logger = RunLogger(
             config.logging.output_dir,
             config.logging.save_raw_llm_outputs or config.logging.save_prompts,
+            run_id=run_id,
+            manifest=run_manifest,
         )
         self.run_id = logger.run_id
         self.state_parser = StateParser(self.client, config, logger)
