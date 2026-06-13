@@ -1,4 +1,4 @@
-# Mentis: A Training-Free Mental World Model Baseline for Multiple-choice Situated Reasoning
+# Mentis: A Training-Free Baseline Implementation of Mental World Model for Multiple-choice Situated Reasoning
 
 Mentis is a training-free baseline for multiple-choice situated reasoning. Instead of asking an LLM to directly choose an answer from the question and options, Mentis explicitly simulates a Mental World Model (MWM): it parses the scene into a joint physical/mental state, renders the target agent's partial observation, simulates each candidate action, scores the resulting next states, and then selects the final action with a deterministic decision rule.
 
