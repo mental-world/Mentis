@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 from datetime import datetime, timezone
+from pathlib import Path
 
 from mentis.config import load_config
 from mentis.evaluation.judge import add_llm_judge_report
@@ -17,7 +18,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Evaluate Mentis outputs")
     parser.add_argument("--pred", required=True, help="Predicted JSON/JSONL path")
     parser.add_argument("--gold", required=True, help="Gold JSON/JSONL path")
-    parser.add_argument("--output", required=True, help="Report JSON path")
+    parser.add_argument(
+        "--output",
+        default="outputs",
+        help="Report JSON path or directory. Default: outputs, which writes {run_id}_report.json",
+    )
     parser.add_argument("--config", default="configs/default.yaml", help="Config YAML path")
     parser.add_argument(
         "--skip-llm-judge",
@@ -54,7 +59,18 @@ async def run_async(args: argparse.Namespace) -> None:
     pred, _ = read_records(args.pred)
     gold, _ = read_records(args.gold)
     config = load_config(args.config)
-    run_manifest = _evaluation_manifest(args, config.models.judge_model, pred, gold)
+    created_at = datetime.now(timezone.utc).astimezone()
+    run_id = build_evaluation_run_id(config.models.judge_model, pred, gold, created_at)
+    output_path = resolve_report_output_path(args.output, run_id)
+    run_manifest = _evaluation_manifest(
+        args,
+        config.models.judge_model,
+        pred,
+        gold,
+        run_id=run_id,
+        output_path=output_path,
+        created_at=created_at,
+    )
     report = await evaluate_records(
         pred,
         gold,
@@ -63,7 +79,37 @@ async def run_async(args: argparse.Namespace) -> None:
         run_id=run_manifest["run_id"],
         run_manifest=run_manifest,
     )
-    save_json(report, args.output)
+    save_json(report, output_path)
+    print(f"Wrote evaluation report to {output_path}")
+
+
+def resolve_report_output_path(output: str, run_id: str) -> Path:
+    requested = Path(output)
+    if requested.suffix.lower() == ".json":
+        if requested.stem.lower() in {"eval_report", "evaluation_report", "report"}:
+            return requested.with_name(f"{run_id}_report.json")
+        return requested
+    return requested / f"{run_id}_report.json"
+
+
+def build_evaluation_run_id(
+    judge_model: str,
+    pred: list[dict],
+    gold: list[dict],
+    created_at: datetime,
+) -> str:
+    sample_ids = _prediction_sample_ids(pred)
+    gold_ids = {str(record.get("sample_id")) for record in gold if record.get("sample_id") is not None}
+    is_all = bool(sample_ids) and set(sample_ids) == gold_ids
+    scope = "all" if is_all else sample_scope_label(sample_ids)
+    ablation = _prediction_ablation_label(pred)
+    return build_readable_run_id(
+        run_type="eval",
+        mode=f"{ablation}_judge",
+        model=judge_model,
+        sample_scope=scope,
+        created_at=created_at.replace(tzinfo=None),
+    )
 
 
 def _evaluation_manifest(
@@ -71,34 +117,58 @@ def _evaluation_manifest(
     judge_model: str,
     pred: list[dict],
     gold: list[dict],
+    run_id: str,
+    output_path: Path,
+    created_at: datetime,
 ) -> dict:
-    created_at = datetime.now(timezone.utc).astimezone()
-    sample_ids = [str(record.get("sample_id")) for record in pred if record.get("sample_id") is not None]
+    sample_ids = _prediction_sample_ids(pred)
     gold_ids = {str(record.get("sample_id")) for record in gold if record.get("sample_id") is not None}
     is_all = bool(sample_ids) and set(sample_ids) == gold_ids
-    scope = "all" if is_all else sample_scope_label(sample_ids)
-    run_id = build_readable_run_id(
-        run_type="eval",
-        mode="judge",
-        model=judge_model,
-        sample_scope=scope,
-        created_at=created_at.replace(tzinfo=None),
-    )
     return {
         "run_id": run_id,
         "run_type": "evaluation",
         "mode": "judge",
+        "prediction_ablation": _prediction_ablation_label(pred),
         "model": judge_model,
         "sample_scope": "all" if is_all else "selected",
         "sample_count": len(pred),
         "sample_ids": None if is_all else sorted(set(sample_ids), key=_sample_sort_key),
         "pred": str(args.pred),
         "gold": str(args.gold),
-        "output": str(args.output),
+        "output": str(output_path),
         "config": str(args.config),
         "skip_llm_judge": bool(args.skip_llm_judge),
         "created_at": created_at.isoformat(timespec="seconds"),
     }
+
+
+def _prediction_sample_ids(pred: list[dict]) -> list[str]:
+    return [
+        str(record.get("sample_id"))
+        for record in pred
+        if record.get("sample_id") is not None
+    ]
+
+
+def _prediction_ablation_label(pred: list[dict]) -> str:
+    ablations = {
+        str(metadata.get("ablation"))
+        for metadata in (_generated_metadata(record) for record in pred)
+        if metadata.get("ablation")
+    }
+    if len(ablations) == 1:
+        return next(iter(ablations))
+    if len(ablations) > 1:
+        return "mixed_ablation"
+    return "unknown_ablation"
+
+
+def _generated_metadata(record: dict) -> dict:
+    generated = record.get("generated_results")
+    if not isinstance(generated, dict):
+        return {}
+    metadata = generated.get("metadata")
+    return metadata if isinstance(metadata, dict) else {}
 
 
 def _sample_sort_key(sample_id: str) -> tuple[int, object]:

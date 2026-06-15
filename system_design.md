@@ -507,10 +507,10 @@ python -m mentis.run
 默认输入为 `data/sample_input.jsonl`，默认配置为 `configs/default.yaml`，默认输出目录为 `outputs/`。因此 `gpt-5.5` 会写为：
 
 ```text
-outputs/gpt5_5_predictions.jsonl
+outputs/predict_full_mwm_gpt5_5_all_20260614_predictions.jsonl
 ```
 
-如果显式输出名是通用的 `prediction.json`、`prediction.jsonl`、`predictions.json` 或 `predictions.jsonl`，系统同样会按 world model 自动加前缀。
+如果输出参数是目录，系统会用和 log 文件夹一致的 readable run id 命名 prediction 文件，并追加 `_predictions.jsonl`。如果显式输出名是通用的 `prediction.json`、`prediction.jsonl`、`predictions.json`、`predictions.jsonl`，或旧式 `{world_model}_predictions.jsonl`，系统同样会改写为 run-id 文件名。
 
 单样本或多样本筛选运行：
 
@@ -521,13 +521,13 @@ python -m mentis.run --sample-id 1 51 76
 评估：
 
 ```bash
-python -m mentis.evaluation.run --pred outputs/gpt5_5_predictions.jsonl --gold data/sample_input.jsonl --output outputs/eval_report.json --config configs/default.yaml
+python -m mentis.evaluation.run --pred outputs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614_predictions.jsonl --gold data/sample_input.jsonl --config configs/default.yaml
 ```
 
 只跑确定性指标，不调用 LLM judge：
 
 ```bash
-python -m mentis.evaluation.run --pred outputs/gpt5_5_predictions.jsonl --gold data/sample_input.jsonl --output outputs/eval_report.json --config configs/default.yaml --skip-llm-judge
+python -m mentis.evaluation.run --pred outputs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614_predictions.jsonl --gold data/sample_input.jsonl --config configs/default.yaml --skip-llm-judge
 ```
 
 ## 11. Evaluation
@@ -602,20 +602,20 @@ outputs/logs/<readable_run_id>/<sample_id>_llm_calls.jsonl
 Prediction run id 形如：
 
 ```text
-predict_<ablation>_<world_model>_<sample_scope>_<timestamp>
+predict_<ablation>_<world_model>_<sample_scope>_<YYYYMMDD>
 ```
 
 Evaluation judge run id 形如：
 
 ```text
-eval_judge_<judge_model>_<sample_scope>_<timestamp>
+eval_<ablation>_judge_<judge_model>_<sample_scope>_<YYYYMMDD>
 ```
 
 示例：
 
 ```text
-outputs/logs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614-013614/
-outputs/logs/eval_judge_gpt5_5_all_20260614-014407/
+outputs/logs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614/
+outputs/logs/eval_full_mwm_judge_gpt5_5_all_20260614/
 ```
 
 如果跑全部样本，`sample_scope` 使用 `all`；如果只跑部分样本，使用 `samples-1-51-76` 这类短标签。每个 log 目录还会写入 `run_manifest.json`，记录 run type、模型、样本范围、输入/输出路径、config 路径和时间戳。

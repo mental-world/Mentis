@@ -162,10 +162,10 @@ python -m mentis.run --sample-id 1 51 76
 By default, Mentis reads `data/sample_input.jsonl`, uses `configs/default.yaml`, and writes predictions under `outputs/`. The default output path is:
 
 ```text
-outputs/gpt5_5_predictions.jsonl
+outputs/predict_full_mwm_gpt5_5_all_20260614_predictions.jsonl
 ```
 
-When the requested output filename is a generic prediction filename, Mentis also prefixes it with the configured world model.
+When the requested output is a directory, Mentis names the prediction file from the same readable run id used by the log folder, then appends `_predictions.jsonl`. Generic prediction filenames and legacy model prediction filenames such as `gpt5_5_predictions.jsonl` are also replaced by the run-id filename.
 
 ## Output Format
 
@@ -232,9 +232,8 @@ Run evaluation with deterministic metrics and the default LLM judge:
 
 ```bash
 python -m mentis.evaluation.run \
-  --pred outputs/gpt5_5_predictions.jsonl \
+  --pred outputs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614_predictions.jsonl \
   --gold data/sample_input.jsonl \
-  --output outputs/eval_report.json \
   --config configs/default.yaml
 ```
 
@@ -242,9 +241,8 @@ Run deterministic metrics only:
 
 ```bash
 python -m mentis.evaluation.run \
-  --pred outputs/gpt5_5_predictions.jsonl \
+  --pred outputs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614_predictions.jsonl \
   --gold data/sample_input.jsonl \
-  --output outputs/eval_report.json \
   --config configs/default.yaml \
   --skip-llm-judge
 ```
@@ -365,20 +363,20 @@ outputs/logs/<readable_run_id>/<sample_id>_llm_calls.jsonl
 Prediction run ids use:
 
 ```text
-predict_<ablation>_<world_model>_<sample_scope>_<timestamp>
+predict_<ablation>_<world_model>_<sample_scope>_<YYYYMMDD>
 ```
 
 Evaluation judge run ids use:
 
 ```text
-eval_judge_<judge_model>_<sample_scope>_<timestamp>
+eval_<ablation>_judge_<judge_model>_<sample_scope>_<YYYYMMDD>
 ```
 
 Examples:
 
 ```text
-outputs/logs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614-013614/
-outputs/logs/eval_judge_gpt5_5_all_20260614-014407/
+outputs/logs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614/
+outputs/logs/eval_full_mwm_judge_gpt5_5_all_20260614/
 ```
 
 Each log directory also contains `run_manifest.json` with the run type, model, sample ids or `all`, input/output paths, config path, and timestamp. Each trace includes the prompt, raw output, parsed JSON, model, latency, token usage, request metadata, and warnings. Prediction files also summarize module metadata under `generated_results.metadata`.

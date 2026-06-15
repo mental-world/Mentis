@@ -1,5 +1,5 @@
 ﻿{
-    "run_id":  "predict_full_mwm_gpt5_5_samples-1-51-76_20260614-005406",
+    "run_id":  "predict_full_mwm_gpt5_5_samples-1-51-76_20260614",
     "run_type":  "prediction",
     "ablation":  "full_mwm",
     "model":  "gpt-5.5",
@@ -11,7 +11,7 @@
                        "76"
                    ],
     "input":  "data/sample_input.jsonl",
-    "output":  "outputs/gpt5_5_predictions.jsonl",
+    "output":  "outputs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614_predictions.jsonl",
     "config":  "configs/default.yaml",
     "migrated_from_run_id":  "5f02ea8fc887",
     "created_at":  "2026-06-14T00:54:06+08:00"

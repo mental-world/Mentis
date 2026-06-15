@@ -1,0 +1,3731 @@
+{
+  "num_samples": 3,
+  "final_action_accuracy": 1.0,
+  "failure_rate": 0.0,
+  "score_alignment": {
+    "mental_mae": null,
+    "physical_mae": null,
+    "social_mae": null
+  },
+  "per_sample": [
+    {
+      "sample_id": 1,
+      "task_type": "social_cooperation",
+      "failed": 0.0,
+      "pred_final_action": "A",
+      "gold_final_action": "A",
+      "final_action_correct": 1.0,
+      "has_current_state": true,
+      "has_observation": true,
+      "has_next_state": true,
+      "next_state_expected_options": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "next_state_predicted_options": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "next_state_missing_options": [],
+      "next_state_extra_options": [],
+      "schema_valid": true,
+      "mental_mae": null,
+      "physical_mae": null,
+      "social_mae": null,
+      "llm_judge": {
+        "current_state_s_t": {
+          "status": "success",
+          "judge": {
+            "item": "current_state_s_t",
+            "physical_score": 0.86,
+            "mental_score": 0.82,
+            "semantic_consistency_score": 0.84,
+            "coupling_score": 0.88,
+            "transition_score": 0.83,
+            "error_types": [
+              "minor_spatial_imprecision",
+              "minor_object_attribute_omission",
+              "minor_affective_overgeneralization",
+              "minor_normative_mismatch"
+            ],
+            "reasoning": "The prediction captures the core blocked-desk physical setup and Amy/Lisa belief-goal conflict, with only minor imprecision about exact positions, object attributes, ambient details, and some inferred emotions or norms.",
+            "option_scores": {
+              "A": {
+                "physical_score": 0.86,
+                "mental_score": 0.82,
+                "semantic_consistency_score": 0.84,
+                "transition_score": 0.83,
+                "error_types": [
+                  "minor_spatial_imprecision",
+                  "minor_object_attribute_omission",
+                  "minor_affective_overgeneralization",
+                  "minor_normative_mismatch"
+                ],
+                "reasoning": "The state supports the cooperative option because Amy's hands are occupied, Lisa's bag occludes the painting, Lisa falsely thinks Amy is done, and Amy wants polite access without moving Lisa's belongings."
+              }
+            },
+            "confidence": 0.91
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 20487.8589999862,
+            "token_usage": {
+              "input_tokens": 10680,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 757,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 11437
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        },
+        "target_agent_observation_o_t": {
+          "status": "success",
+          "judge": {
+            "item": "target_agent_observation_o_t",
+            "physical_score": 0.78,
+            "mental_score": 0.74,
+            "semantic_consistency_score": 0.77,
+            "coupling_score": 0.8,
+            "transition_score": 0.76,
+            "error_types": [
+              "overconfident_hidden_state",
+              "minor_spatial_mismatch",
+              "overinferred_other_agent_mental_state",
+              "missing_specific_affordances"
+            ],
+            "reasoning": "The prediction captures Amy's blocked view, occupied hands, Lisa's mistaken comment, and polite goal structure, but it sometimes asserts hidden desk/painting state and over-specifies Lisa's beliefs, motives, and preferences beyond Amy's observation.",
+            "option_scores": {
+              "A": {
+                "physical_score": 0.78,
+                "mental_score": 0.74,
+                "semantic_consistency_score": 0.77,
+                "transition_score": 0.76,
+                "error_types": [
+                  "overconfident_hidden_state",
+                  "minor_spatial_mismatch",
+                  "overinferred_other_agent_mental_state",
+                  "missing_specific_affordances"
+                ],
+                "reasoning": "The observation supports the cooperative action but is less faithful than gold because it treats some occluded items as known current facts and attributes too much internal state to Lisa."
+              }
+            },
+            "confidence": 0.86
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 38912.24710003007,
+            "token_usage": {
+              "input_tokens": 10302,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 832,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 11134
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        },
+        "next_state_s_{t+1}": {
+          "A": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.92,
+              "mental_score": 0.86,
+              "semantic_consistency_score": 0.89,
+              "coupling_score": 0.9,
+              "transition_score": 0.93,
+              "error_types": [
+                "minor_physical_detail_mismatch",
+                "minor_mental_temporal_lag",
+                "minor_mental_detail_omission"
+              ],
+              "reasoning": "Prediction captures the polite request, hands freed, bag no longer blocking, and corrected belief, but is vaguer about Lisa actively moving/apologizing and leaves some of Amy's mental state in a pre-move/request phase.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.92,
+                  "mental_score": 0.86,
+                  "semantic_consistency_score": 0.89,
+                  "transition_score": 0.93,
+                  "error_types": [
+                    "minor_physical_detail_mismatch",
+                    "minor_mental_temporal_lag",
+                    "minor_mental_detail_omission"
+                  ],
+                  "reasoning": "The physical transition is mostly faithful, but the mental state is somewhat overextended and not fully updated to the final post-move state."
+                }
+              },
+              "confidence": 0.91
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 35816.92420004401,
+              "token_usage": {
+                "input_tokens": 15212,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 814,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 16026
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "B": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.88,
+              "mental_score": 0.93,
+              "semantic_consistency_score": 0.91,
+              "coupling_score": 0.92,
+              "transition_score": 0.95,
+              "error_types": [
+                "minor_character_reaction_mismatch",
+                "minor_spatial_specificity_loss"
+              ],
+              "reasoning": "The prediction faithfully represents option B's physical consequences and social fallout, with only minor mismatch in Lisa's visible reaction and less precise placement details.",
+              "option_scores": {
+                "B": {
+                  "physical_score": 0.88,
+                  "mental_score": 0.93,
+                  "semantic_consistency_score": 0.91,
+                  "transition_score": 0.95,
+                  "error_types": [
+                    "minor_character_reaction_mismatch",
+                    "minor_spatial_specificity_loss"
+                  ],
+                  "reasoning": "The bag is dumped open, the desk and painting become accessible, Amy prioritizes painting, and Lisa updates to feeling offended and protective, though Lisa is still described physically as cheerful rather than shocked."
+                }
+              },
+              "confidence": 0.94
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 34492.676299996674,
+              "token_usage": {
+                "input_tokens": 15170,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 787,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 15957
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "C": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.86,
+              "mental_score": 0.78,
+              "semantic_consistency_score": 0.82,
+              "coupling_score": 0.83,
+              "transition_score": 0.84,
+              "error_types": [
+                "minor_omission_of_attempted_action",
+                "slight_overinference_of_lisa_cooperation",
+                "minor_spatial_detail_mismatch"
+              ],
+              "reasoning": "Prediction correctly preserves the hand-occupancy impossibility so the bag and brush remain unmoved, but under-represents Amy's awkward attempted lift and slightly overstates Lisa's helpful understanding.",
+              "option_scores": {
+                "C": {
+                  "physical_score": 0.86,
+                  "mental_score": 0.78,
+                  "semantic_consistency_score": 0.82,
+                  "transition_score": 0.84,
+                  "error_types": [
+                    "minor_omission_of_attempted_action",
+                    "slight_overinference_of_lisa_cooperation",
+                    "minor_spatial_detail_mismatch"
+                  ],
+                  "reasoning": "For option C, the predicted next state matches the causal failure of lifting the bag and picking up the brush with both hands occupied, though it omits some visible awkward attempt/contact details and makes Lisa more ready to help than gold supports."
+                }
+              },
+              "confidence": 0.91
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 33327.999900095165,
+              "token_usage": {
+                "input_tokens": 15016,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 768,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 15784
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "D": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.87,
+              "mental_score": 0.86,
+              "semantic_consistency_score": 0.89,
+              "coupling_score": 0.9,
+              "transition_score": 0.91,
+              "error_types": [
+                "minor_overstatement",
+                "minor_state_detail_mismatch"
+              ],
+              "reasoning": "Prediction is largely faithful to option D and gold, with minor physical overstatement about the painting being fully detached/in Amy's grasp and slight mismatch/understatement of Lisa's immediate hurt embarrassment and Amy's regret.",
+              "option_scores": {
+                "D": {
+                  "physical_score": 0.87,
+                  "mental_score": 0.86,
+                  "semantic_consistency_score": 0.89,
+                  "transition_score": 0.91,
+                  "error_types": [
+                    "minor_overstatement",
+                    "minor_state_detail_mismatch"
+                  ],
+                  "reasoning": "The branch correctly captures putting items down, shoving the bag aside, damaging the painting, Amy's anger, and Lisa's hurt/conflict response, but slightly overstates detachment/grasp of the painting and omits or weakens some gold mental details like Amy's regret and Lisa feeling unfairly blamed."
+                }
+              },
+              "confidence": 0.92
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 32105.470500071533,
+              "token_usage": {
+                "input_tokens": 15330,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 753,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 16083
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "E": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.88,
+              "mental_score": 0.92,
+              "semantic_consistency_score": 0.9,
+              "coupling_score": 0.9,
+              "transition_score": 0.9,
+              "error_types": [
+                "minor_spatial_detail_mismatch",
+                "minor_affective_detail_mismatch",
+                "minor_object_condition_overgeneralization"
+              ],
+              "reasoning": "The prediction matches the option E transition well: Amy remains at the doorway with both items held, the opaque bag still blocks the painting, and she politely abandons painting based on an impossible visual claim, with only minor differences in Lisa's exact position and affect.",
+              "option_scores": {
+                "E": {
+                  "physical_score": 0.88,
+                  "mental_score": 0.92,
+                  "semantic_consistency_score": 0.9,
+                  "transition_score": 0.9,
+                  "error_types": [
+                    "minor_spatial_detail_mismatch",
+                    "minor_affective_detail_mismatch",
+                    "minor_object_condition_overgeneralization"
+                  ],
+                  "reasoning": "Physical layout and occlusion are preserved and mental updates largely match gold, though Lisa is placed closer to the doorway rather than beside the bag and some object and emotional details are less precise."
+                }
+              },
+              "confidence": 0.93
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 33402.27339998819,
+              "token_usage": {
+                "input_tokens": 15007,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 827,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 15834
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "F": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.9,
+              "mental_score": 0.86,
+              "semantic_consistency_score": 0.88,
+              "coupling_score": 0.91,
+              "transition_score": 0.93,
+              "error_types": [
+                "minor_spatial_detail_mismatch",
+                "minor_over_inference"
+              ],
+              "reasoning": "The prediction correctly keeps Amy near the doorway after setting items down, leaves the bag blocking the desk, and captures Amy's polite disappointment, with only minor deviations about Lisa's exact position and possible Lisa awareness.",
+              "option_scores": {
+                "F": {
+                  "physical_score": 0.9,
+                  "mental_score": 0.86,
+                  "semantic_consistency_score": 0.88,
+                  "transition_score": 0.93,
+                  "error_types": [
+                    "minor_spatial_detail_mismatch",
+                    "minor_over_inference"
+                  ],
+                  "reasoning": "The predicted next state is causally faithful to option F: Amy sets the bottle and towel down, avoids moving the bag, skips painting, and maintains a friendly but personally disappointing interaction."
+                }
+              },
+              "confidence": 0.92
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 35416.076999972574,
+              "token_usage": {
+                "input_tokens": 14951,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 794,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 15745
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          }
+        },
+        "score": {
+          "status": "success",
+          "judge": {
+            "item": "score",
+            "physical_score": 0.95,
+            "mental_score": 0.95,
+            "semantic_consistency_score": 0.96,
+            "coupling_score": 0.98,
+            "transition_score": 0.95,
+            "error_types": [],
+            "reasoning": "The prediction selects the gold action A and its option-level diagnostics are broadly causally faithful to the stated physical, mental, and social constraints.",
+            "option_scores": {
+              "A": {
+                "physical_score": 1.0,
+                "mental_score": 1.0,
+                "semantic_consistency_score": 1.0,
+                "transition_score": 1.0,
+                "error_types": [],
+                "reasoning": "Correctly identifies A as physically feasible, mentally aligned with Amy's goals, socially appropriate, and the best final action."
+              },
+              "B": {
+                "physical_score": 1.0,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.9,
+                "transition_score": 1.0,
+                "error_types": [],
+                "reasoning": "Correctly treats B as physically possible but mentally and socially misaligned because Amy handles Lisa's belongings without permission and acts rudely."
+              },
+              "C": {
+                "physical_score": 1.0,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.9,
+                "transition_score": 0.9,
+                "error_types": [],
+                "reasoning": "Correctly flags C as physically contradictory due to occupied hands and only partially aligned with Amy's communicative goal."
+              },
+              "D": {
+                "physical_score": 1.0,
+                "mental_score": 1.0,
+                "semantic_consistency_score": 0.95,
+                "transition_score": 1.0,
+                "error_types": [],
+                "reasoning": "Correctly rates D as physically coherent but strongly inconsistent with Amy's goals and socially inappropriate."
+              },
+              "E": {
+                "physical_score": 0.9,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.9,
+                "transition_score": 0.9,
+                "error_types": [],
+                "reasoning": "Correctly notes that E is mostly physically possible except for the implausible visual claim, while conflicting with Amy's desire to finish and clarify."
+              },
+              "F": {
+                "physical_score": 1.0,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.95,
+                "transition_score": 1.0,
+                "error_types": [],
+                "reasoning": "Correctly treats F as physically and socially gentle but mentally suboptimal because Amy abandons her goal and leaves Lisa's false belief uncorrected."
+              }
+            },
+            "confidence": 0.9
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 42067.504100035876,
+            "token_usage": {
+              "input_tokens": 7820,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 1155,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 8975
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "sample_id": 51,
+      "task_type": "social_cooperation",
+      "failed": 0.0,
+      "pred_final_action": "C",
+      "gold_final_action": "C",
+      "final_action_correct": 1.0,
+      "has_current_state": true,
+      "has_observation": true,
+      "has_next_state": true,
+      "next_state_expected_options": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "next_state_predicted_options": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "next_state_missing_options": [],
+      "next_state_extra_options": [],
+      "schema_valid": true,
+      "mental_mae": null,
+      "physical_mae": null,
+      "social_mae": null,
+      "llm_judge": {
+        "current_state_s_t": {
+          "status": "success",
+          "judge": {
+            "item": "current_state_s_t",
+            "physical_score": 0.75,
+            "mental_score": 0.82,
+            "semantic_consistency_score": 0.79,
+            "coupling_score": 0.82,
+            "transition_score": 0.74,
+            "error_types": [
+              "appearance_mismatch",
+              "motion_state_mismatch",
+              "missing_swing_motion",
+              "missing_safety_boundary_detail",
+              "minor_mental_omissions",
+              "extraneous_details"
+            ],
+            "reasoning": "The prediction captures the core noisy playground, swing-boundary setup, Xiao Mei's uncertainty, and the girls' friendly approach, but it mismatches clothing and motion details, omits the nearly stopped swing and some safety/hopeful goal nuances, and adds unsupported specifics.",
+            "option_scores": {},
+            "confidence": 0.86
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 132344.8090000311,
+            "token_usage": {
+              "input_tokens": 11311,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 5893,
+              "output_tokens_details": {
+                "reasoning_tokens": 5696
+              },
+              "total_tokens": 17204
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        },
+        "target_agent_observation_o_t": {
+          "status": "success",
+          "judge": {
+            "item": "target_agent_observation_o_t",
+            "physical_score": 0.58,
+            "mental_score": 0.68,
+            "semantic_consistency_score": 0.62,
+            "coupling_score": 0.65,
+            "transition_score": 0.6,
+            "error_types": [
+              "wrong_visual_attributes",
+              "spatial_mismatch",
+              "missing_motion_state",
+              "over-inferred_other_agents",
+              "added_unobserved_background_details",
+              "missing_key_observed_cues"
+            ],
+            "reasoning": "The prediction captures Xiao Mei on the swing, noisy playground, classmates nearby smiling, and her uncertainty, but it changes clothing/positions, omits key cues like nodding, nearly stopped swing, rubber mat, and over-infers friendliness and background details.",
+            "option_scores": {
+              "A": {
+                "physical_score": 0.58,
+                "mental_score": 0.68,
+                "semantic_consistency_score": 0.62,
+                "transition_score": 0.6,
+                "error_types": [
+                  "wrong_visual_attributes",
+                  "spatial_mismatch",
+                  "missing_motion_state",
+                  "over-inferred_other_agents",
+                  "added_unobserved_background_details",
+                  "missing_key_observed_cues"
+                ],
+                "reasoning": "Same observation judgment applies because the predicted o_t is option-independent and only partially matches Xiao Mei's perceptual state."
+              }
+            },
+            "confidence": 0.88
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 125506.4454000676,
+            "token_usage": {
+              "input_tokens": 10825,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 847,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 11672
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        },
+        "next_state_s_{t+1}": {
+          "A": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.82,
+              "mental_score": 0.72,
+              "semantic_consistency_score": 0.77,
+              "coupling_score": 0.78,
+              "transition_score": 0.84,
+              "error_types": [
+                "understated_social_embarrassment",
+                "incorrect_or_missing_affective_update",
+                "minor_physical_detail_mismatch",
+                "over_softened_interpersonal_tension"
+              ],
+              "reasoning": "The prediction captures Xiao Mei stopping the swing and loudly challenging the girls, but it softens the public accusation's awkward effect and keeps Xiao Hong and Xiao Fang too friendly rather than embarrassed or uncomfortable.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.82,
+                  "mental_score": 0.72,
+                  "semantic_consistency_score": 0.77,
+                  "transition_score": 0.84,
+                  "error_types": [
+                    "understated_social_embarrassment",
+                    "incorrect_or_missing_affective_update",
+                    "minor_physical_detail_mismatch",
+                    "over_softened_interpersonal_tension"
+                  ],
+                  "reasoning": "Physical transition is mostly faithful, but mental consequences are partially wrong because the gold state makes the exchange publicly awkward and embarrassing while the prediction treats the girls as mostly friendly, concerned, and ready to explain."
+                }
+              },
+              "confidence": 0.9
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 36024.73349997308,
+              "token_usage": {
+                "input_tokens": 16476,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 839,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17315
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "B": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.82,
+              "mental_score": 0.78,
+              "semantic_consistency_score": 0.76,
+              "coupling_score": 0.68,
+              "transition_score": 0.8,
+              "error_types": [
+                "minor_physical_detail_mismatch",
+                "mental_physical_inconsistency",
+                "overstated_social_update"
+              ],
+              "reasoning": "Prediction correctly identifies the impossible reach/tap while seated and holding both chains, but its mental state inconsistently treats the tap as perceived and adds somewhat stronger social clarity than gold.",
+              "option_scores": {
+                "B": {
+                  "physical_score": 0.82,
+                  "mental_score": 0.78,
+                  "semantic_consistency_score": 0.76,
+                  "transition_score": 0.8,
+                  "error_types": [
+                    "minor_physical_detail_mismatch",
+                    "mental_physical_inconsistency",
+                    "overstated_social_update"
+                  ],
+                  "reasoning": "Physical branch largely matches gold by preserving distance, chain grip, seating, and failed contact, while mental branch partly conflicts by referencing a successful tap and over-specifying responses."
+                }
+              },
+              "confidence": 0.87
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 36080.1441000076,
+              "token_usage": {
+                "input_tokens": 16306,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 805,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17111
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "C": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.91,
+              "mental_score": 0.94,
+              "semantic_consistency_score": 0.93,
+              "coupling_score": 0.95,
+              "transition_score": 0.96,
+              "error_types": [
+                "minor_detail_mismatch",
+                "minor_omission"
+              ],
+              "reasoning": "The prediction captures the safe stopped swing, boundary-respecting positions, polite question, and cautious-friendly mental update, with only minor mismatches in clothing/object details and omission of Xiao Hong beginning to answer.",
+              "option_scores": {
+                "C": {
+                  "physical_score": 0.91,
+                  "mental_score": 0.94,
+                  "semantic_consistency_score": 0.93,
+                  "transition_score": 0.96,
+                  "error_types": [
+                    "minor_detail_mismatch",
+                    "minor_omission"
+                  ],
+                  "reasoning": "Option C is causally faithful to the gold transition: Xiao Mei safely stops the swing, asks politely, the other girls remain outside the line and become encouraged, though the predicted branch misses the explicit start of Xiao Hong's reply and differs in superficial appearance details."
+                }
+              },
+              "confidence": 0.92
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 38723.33249996882,
+              "token_usage": {
+                "input_tokens": 16437,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 804,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17241
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "D": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.9,
+              "mental_score": 0.82,
+              "semantic_consistency_score": 0.86,
+              "coupling_score": 0.88,
+              "transition_score": 0.9,
+              "error_types": [
+                "minor_appearance_mismatch",
+                "understated_negative_social_effect",
+                "minor_safety_boundary_omission"
+              ],
+              "reasoning": "The prediction correctly models Xiao Mei leaving the swing, pushing between the girls, and accusing them, but it softens the resulting hurt/fear and omits some safety-line and appearance details.",
+              "option_scores": {
+                "D": {
+                  "physical_score": 0.9,
+                  "mental_score": 0.82,
+                  "semantic_consistency_score": 0.86,
+                  "transition_score": 0.9,
+                  "error_types": [
+                    "minor_appearance_mismatch",
+                    "understated_negative_social_effect",
+                    "minor_safety_boundary_omission"
+                  ],
+                  "reasoning": "For option D, the physical transition is largely faithful, while the mental state is directionally correct but too conciliatory for Xiao Hong and Xiao Fang compared with the gold conflictual aftermath."
+                }
+              },
+              "confidence": 0.91
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 40294.950600015,
+              "token_usage": {
+                "input_tokens": 16575,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 813,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17388
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "E": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.42,
+              "mental_score": 0.68,
+              "semantic_consistency_score": 0.55,
+              "coupling_score": 0.5,
+              "transition_score": 0.52,
+              "error_types": [
+                "missing_physical_inconsistency",
+                "omitted_action_effect",
+                "physical_state_mismatch",
+                "over_optimistic_social_inference"
+              ],
+              "reasoning": "The prediction captures the polite swing offer and some misunderstanding, but it fails to represent the gold branch's key physical impossibility of being seated holding chains while walking behind the frame and softens the confused/avoidant social outcome.",
+              "option_scores": {
+                "E": {
+                  "physical_score": 0.42,
+                  "mental_score": 0.68,
+                  "semantic_consistency_score": 0.55,
+                  "transition_score": 0.52,
+                  "error_types": [
+                    "missing_physical_inconsistency",
+                    "omitted_action_effect",
+                    "physical_state_mismatch",
+                    "over_optimistic_social_inference"
+                  ],
+                  "reasoning": "For option E, the predicted state keeps Xiao Mei seated and speaking but omits the impossible walking-behind-frame component that gold explicitly flags, while mostly preserving the misunderstanding and failure to ask why they came."
+                }
+              },
+              "confidence": 0.86
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 36685.004299972206,
+              "token_usage": {
+                "input_tokens": 16297,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 836,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17133
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "F": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.88,
+              "mental_score": 0.74,
+              "semantic_consistency_score": 0.8,
+              "coupling_score": 0.82,
+              "transition_score": 0.86,
+              "error_types": [
+                "minor_physical_detail_mismatch",
+                "mental_state_over_inference",
+                "appearance_mismatch"
+              ],
+              "reasoning": "Prediction captures Xiao Mei safely leaving an empty stopped swing, but softens the missed-opportunity outcome by making Xiao Hong and Xiao Fang more actively intent on clarifying than the gold state.",
+              "option_scores": {
+                "F": {
+                  "physical_score": 0.88,
+                  "mental_score": 0.74,
+                  "semantic_consistency_score": 0.8,
+                  "transition_score": 0.86,
+                  "error_types": [
+                    "minor_physical_detail_mismatch",
+                    "mental_state_over_inference",
+                    "appearance_mismatch"
+                  ],
+                  "reasoning": "Physical transition is mostly faithful, while mental consequences are partly over-optimistic and less clearly describe Xiao Mei abandoning the chance to learn their intent."
+                }
+              },
+              "confidence": 0.91
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 33451.607300085016,
+              "token_usage": {
+                "input_tokens": 16324,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 729,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17053
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          }
+        },
+        "score": {
+          "status": "success",
+          "judge": {
+            "item": "score",
+            "physical_score": 0.96,
+            "mental_score": 0.92,
+            "semantic_consistency_score": 0.95,
+            "coupling_score": 0.96,
+            "transition_score": 0.94,
+            "error_types": [],
+            "reasoning": "The prediction selects the gold action C and its option-level reasoning is largely causally faithful, with only minor possible softness in some mental-score gradations.",
+            "option_scores": {
+              "A": {
+                "physical_score": 1.0,
+                "mental_score": 0.85,
+                "semantic_consistency_score": 0.9,
+                "transition_score": 0.95,
+                "error_types": [],
+                "reasoning": "It correctly treats A as physically plausible but socially and mentally compromised by a loud accusatory challenge."
+              },
+              "B": {
+                "physical_score": 0.95,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.92,
+                "transition_score": 0.9,
+                "error_types": [],
+                "reasoning": "It correctly identifies the impossible reach/tap as the main flaw while crediting the non-accusatory intent."
+              },
+              "C": {
+                "physical_score": 1.0,
+                "mental_score": 1.0,
+                "semantic_consistency_score": 1.0,
+                "transition_score": 1.0,
+                "error_types": [],
+                "reasoning": "It matches the gold choice and accurately explains C as safe, polite, clarifying, and friendship-preserving."
+              },
+              "D": {
+                "physical_score": 0.9,
+                "mental_score": 1.0,
+                "semantic_consistency_score": 0.95,
+                "transition_score": 0.95,
+                "error_types": [],
+                "reasoning": "It correctly rejects D for accusation, aggression, and failure to preserve friendliness despite possible physical execution."
+              },
+              "E": {
+                "physical_score": 1.0,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.92,
+                "transition_score": 0.9,
+                "error_types": [],
+                "reasoning": "It correctly marks E as physically contradictory and only partially mentally/socially useful because it avoids clarification."
+              },
+              "F": {
+                "physical_score": 1.0,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.92,
+                "transition_score": 0.95,
+                "error_types": [],
+                "reasoning": "It correctly sees F as physically safe and polite but inferior because walking away fails the clarification goal."
+              }
+            },
+            "confidence": 0.93
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 38614.88050001208,
+            "token_usage": {
+              "input_tokens": 7679,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 1130,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 8809
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "sample_id": 76,
+      "task_type": "object_transfer",
+      "failed": 0.0,
+      "pred_final_action": "D",
+      "gold_final_action": "D",
+      "final_action_correct": 1.0,
+      "has_current_state": true,
+      "has_observation": true,
+      "has_next_state": true,
+      "next_state_expected_options": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "next_state_predicted_options": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "next_state_missing_options": [],
+      "next_state_extra_options": [],
+      "schema_valid": true,
+      "mental_mae": null,
+      "physical_mae": null,
+      "social_mae": null,
+      "llm_judge": {
+        "current_state_s_t": {
+          "status": "success",
+          "judge": {
+            "item": "current_state_s_t",
+            "physical_score": 0.18,
+            "mental_score": 0.1,
+            "semantic_consistency_score": 0.14,
+            "coupling_score": 0.35,
+            "transition_score": 0.12,
+            "error_types": [
+              "wrong_agents",
+              "wrong_object_set",
+              "wrong_spatial_relations",
+              "missing_target_agent",
+              "missing_request_event",
+              "missing_referential_cues",
+              "hallucinated_roles",
+              "hallucinated_mental_state"
+            ],
+            "reasoning": "The prediction describes a broadly similar living-room toy scene but replaces the named children, requested transfer setup, crowded plate contents, curtain-viewing context, and Xiao Fang/Li Qiang mental states with mostly unrelated generic family-play details.",
+            "option_scores": {
+              "A": {
+                "physical_score": 0.18,
+                "mental_score": 0.1,
+                "semantic_consistency_score": 0.14,
+                "transition_score": 0.12,
+                "error_types": [
+                  "wrong_agents",
+                  "wrong_object_set",
+                  "wrong_spatial_relations",
+                  "missing_target_agent",
+                  "missing_request_event",
+                  "missing_referential_cues",
+                  "hallucinated_roles",
+                  "hallucinated_mental_state"
+                ],
+                "reasoning": "The state is not semantically faithful to the gold setup needed to evaluate option A because it omits Li Qiang, Xiao Fang, the plate arrangement, and the politeness/curtain context."
+              },
+              "B": {
+                "physical_score": 0.18,
+                "mental_score": 0.1,
+                "semantic_consistency_score": 0.14,
+                "transition_score": 0.12,
+                "error_types": [
+                  "wrong_agents",
+                  "wrong_object_set",
+                  "wrong_spatial_relations",
+                  "missing_target_agent",
+                  "missing_request_event",
+                  "missing_referential_cues",
+                  "hallucinated_roles",
+                  "hallucinated_mental_state"
+                ],
+                "reasoning": "The prediction lacks the gold physical constraints about Xiao Fang, Li Qiang, the crowded plate, and the single reachable blind box doll, so it cannot support option B reasoning."
+              },
+              "C": {
+                "physical_score": 0.18,
+                "mental_score": 0.1,
+                "semantic_consistency_score": 0.14,
+                "transition_score": 0.12,
+                "error_types": [
+                  "wrong_agents",
+                  "wrong_object_set",
+                  "wrong_spatial_relations",
+                  "missing_target_agent",
+                  "missing_request_event",
+                  "missing_referential_cues",
+                  "hallucinated_roles",
+                  "hallucinated_mental_state"
+                ],
+                "reasoning": "The prediction only partially overlaps on a red interactive toy and misses the gold evidence that Li Qiang wants the blind box doll and should not be shamed."
+              },
+              "D": {
+                "physical_score": 0.18,
+                "mental_score": 0.1,
+                "semantic_consistency_score": 0.14,
+                "transition_score": 0.12,
+                "error_types": [
+                  "wrong_agents",
+                  "wrong_object_set",
+                  "wrong_spatial_relations",
+                  "missing_target_agent",
+                  "missing_request_event",
+                  "missing_referential_cues",
+                  "hallucinated_roles",
+                  "hallucinated_mental_state"
+                ],
+                "reasoning": "Although it includes a purple bunny-like doll in a living-room toy scene, it incorrectly has another child holding it and omits the named request, reachability, and politeness constraints central to option D."
+              },
+              "E": {
+                "physical_score": 0.18,
+                "mental_score": 0.1,
+                "semantic_consistency_score": 0.14,
+                "transition_score": 0.12,
+                "error_types": [
+                  "wrong_agents",
+                  "wrong_object_set",
+                  "wrong_spatial_relations",
+                  "missing_target_agent",
+                  "missing_request_event",
+                  "missing_referential_cues",
+                  "hallucinated_roles",
+                  "hallucinated_mental_state"
+                ],
+                "reasoning": "The predicted state does not represent Li Qiang's limited hand capacity or the three specific shared toys on the crowded plate."
+              },
+              "F": {
+                "physical_score": 0.18,
+                "mental_score": 0.1,
+                "semantic_consistency_score": 0.14,
+                "transition_score": 0.12,
+                "error_types": [
+                  "wrong_agents",
+                  "wrong_object_set",
+                  "wrong_spatial_relations",
+                  "missing_target_agent",
+                  "missing_request_event",
+                  "missing_referential_cues",
+                  "hallucinated_roles",
+                  "hallucinated_mental_state"
+                ],
+                "reasoning": "The prediction contains a tray-like object but misses the gold crowded-plate transfer situation and the need for Xiao Fang to choose only the intended toy."
+              }
+            },
+            "confidence": 0.96
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 71571.68400008231,
+            "token_usage": {
+              "input_tokens": 11506,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 1634,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 13140
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        },
+        "target_agent_observation_o_t": {
+          "status": "success",
+          "judge": {
+            "item": "target_agent_observation_o_t",
+            "physical_score": 0.18,
+            "mental_score": 0.12,
+            "semantic_consistency_score": 0.14,
+            "coupling_score": 0.2,
+            "transition_score": 0.08,
+            "error_types": [
+              "wrong_characters",
+              "missing_key_request",
+              "wrong_object_layout",
+              "wrong_contact_state",
+              "missing_target_inference",
+              "temporal_state_mismatch",
+              "target_perspective_incomplete"
+            ],
+            "reasoning": "The prediction describes a different living-room toy-play state with adults and Xiao Fang holding a bunny toy, while the gold requires Li Qiang's request, the crowded plate with puzzle/musical toy/blind-box doll, and Xiao Fang's inference about politely handing only the doll.",
+            "option_scores": {
+              "A": {
+                "physical_score": 0.25,
+                "mental_score": 0.15,
+                "semantic_consistency_score": 0.2,
+                "transition_score": 0.15,
+                "error_types": [
+                  "partially_correct_referent",
+                  "wrong_social_inference",
+                  "disturbs_objects",
+                  "impolite_action"
+                ],
+                "reasoning": "It selects the blind box doll but wrongly uses humiliating speech and disturbs the other toys, conflicting with the observed need for politeness and careful transfer."
+              },
+              "B": {
+                "physical_score": 0.15,
+                "mental_score": 0.2,
+                "semantic_consistency_score": 0.12,
+                "transition_score": 0.1,
+                "error_types": [
+                  "physically_impossible_action",
+                  "wrong_hand_availability",
+                  "object_handling_error"
+                ],
+                "reasoning": "It targets the right toy politely in spirit, but the simultaneous plate-supporting and single-toy lifting is physically impossible from Xiao Fang's state."
+              },
+              "C": {
+                "physical_score": 0.1,
+                "mental_score": 0.05,
+                "semantic_consistency_score": 0.08,
+                "transition_score": 0.05,
+                "error_types": [
+                  "wrong_referent",
+                  "impolite_action",
+                  "wrong_social_inference"
+                ],
+                "reasoning": "It chooses the musical toy instead of the inferred blind box doll and adds accusatory speech inconsistent with Xiao Fang's polite goal."
+              },
+              "D": {
+                "physical_score": 1.0,
+                "mental_score": 1.0,
+                "semantic_consistency_score": 1.0,
+                "transition_score": 1.0,
+                "error_types": [],
+                "reasoning": "It matches Xiao Fang's observable inference, reachable object constraints, careful handling of the crowded plate, and polite response to Li Qiang."
+              },
+              "E": {
+                "physical_score": 0.25,
+                "mental_score": 0.35,
+                "semantic_consistency_score": 0.25,
+                "transition_score": 0.2,
+                "error_types": [
+                  "overbroad_transfer",
+                  "capacity_constraint_violation",
+                  "fails_intended_referent"
+                ],
+                "reasoning": "It is polite but fails to infer and hand over only the intended toy and overloads Li Qiang's hands."
+              },
+              "F": {
+                "physical_score": 0.3,
+                "mental_score": 0.3,
+                "semantic_consistency_score": 0.25,
+                "transition_score": 0.25,
+                "error_types": [
+                  "fails_intended_referent",
+                  "disturbs_crowded_plate",
+                  "unsafe_object_handling"
+                ],
+                "reasoning": "It avoids direct insult but fails to infer the specific toy and risks disturbing the crowded shared plate."
+              }
+            },
+            "confidence": 0.95
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 75635.5056000175,
+            "token_usage": {
+              "input_tokens": 11355,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 1372,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 12727
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        },
+        "next_state_s_{t+1}": {
+          "A": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.38,
+              "mental_score": 0.36,
+              "semantic_consistency_score": 0.43,
+              "coupling_score": 0.44,
+              "transition_score": 0.4,
+              "error_types": [
+                "wrong_characters",
+                "missing_recipient",
+                "missing_object",
+                "incomplete_physical_effects",
+                "incorrect_initial_contact",
+                "under-specified_transfer",
+                "mental_state_misattribution"
+              ],
+              "reasoning": "The prediction captures Xiao Fang holding the doll, shoving the musical toy, speaking the accusation, and creating tension, but it uses the wrong participants, omits Li Qiang's receiving/embarrassment and the puzzle displacement, and is inconsistent with the doll already being held.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.38,
+                  "mental_score": 0.36,
+                  "semantic_consistency_score": 0.43,
+                  "transition_score": 0.4,
+                  "error_types": [
+                    "wrong_characters",
+                    "missing_recipient",
+                    "missing_object",
+                    "incomplete_physical_effects",
+                    "incorrect_initial_contact",
+                    "under-specified_transfer",
+                    "mental_state_misattribution"
+                  ],
+                  "reasoning": "For option A, the core rude doll pickup and musical-toy shove are partially represented, but the branch replaces Li Qiang and Zhang Li with unrelated people, misses the animal puzzle being shoved, and fails to model Li Qiang receiving the doll and feeling embarrassed."
+                }
+              },
+              "confidence": 0.9
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 57701.117699965835,
+              "token_usage": {
+                "input_tokens": 16807,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 887,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17694
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "B": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.12,
+              "mental_score": 0.28,
+              "semantic_consistency_score": 0.2,
+              "coupling_score": 0.18,
+              "transition_score": 0.18,
+              "error_types": [
+                "wrong_scene_entities",
+                "missing_physical_transition",
+                "incorrect_actor_identities",
+                "missed_hand_occupancy_contradiction",
+                "object_mismatch",
+                "weak_action_coupling"
+              ],
+              "reasoning": "The prediction keeps a largely unrelated living-room toy scene and only mentally notes awkward hand use, while the gold branch requires the specific children, plate toys, and explicit physical contradiction of Xiao Fang using both hands under the plate and on the doll.",
+              "option_scores": {
+                "B": {
+                  "physical_score": 0.12,
+                  "mental_score": 0.28,
+                  "semantic_consistency_score": 0.2,
+                  "transition_score": 0.18,
+                  "error_types": [
+                    "wrong_scene_entities",
+                    "missing_physical_transition",
+                    "incorrect_actor_identities",
+                    "missed_hand_occupancy_contradiction",
+                    "object_mismatch",
+                    "weak_action_coupling"
+                  ],
+                  "reasoning": "For option B, the predicted branch fails to instantiate the gold handoff contradiction physically and misidentifies the characters and objects, though it partially captures that the attempted simultaneous plate balancing and doll handoff is awkward."
+                }
+              },
+              "confidence": 0.93
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 59029.314500046894,
+              "token_usage": {
+                "input_tokens": 16487,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 787,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17274
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "C": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.32,
+              "mental_score": 0.45,
+              "semantic_consistency_score": 0.38,
+              "coupling_score": 0.35,
+              "transition_score": 0.42,
+              "error_types": [
+                "wrong_action_carrier",
+                "wrong_character_identities",
+                "wrong_recipient",
+                "missing_key_object_state",
+                "incorrect_scene_details",
+                "incomplete_mental_updates"
+              ],
+              "reasoning": "The prediction captures that the musical sound toy is selected and a sharp accusation creates tension, but it wrongly assigns the physical action and speech to an adult man, omits Li Qiang/Zhang Li and Li Qiang's continued interest in the blind box doll, and uses many incompatible scene details.",
+              "option_scores": {
+                "C": {
+                  "physical_score": 0.32,
+                  "mental_score": 0.45,
+                  "semantic_consistency_score": 0.38,
+                  "transition_score": 0.42,
+                  "error_types": [
+                    "wrong_action_carrier",
+                    "wrong_character_identities",
+                    "wrong_recipient",
+                    "missing_key_object_state",
+                    "incorrect_scene_details",
+                    "incomplete_mental_updates"
+                  ],
+                  "reasoning": "For option C, the red musical toy being lifted and the rude accusation are partially represented, but the agent, recipient, character identities, blind-box preference, and plate contents are substantially wrong."
+                }
+              },
+              "confidence": 0.91
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 49354.98509998433,
+              "token_usage": {
+                "input_tokens": 16576,
+                "input_tokens_details": {
+                  "cached_tokens": 0
+                },
+                "output_tokens": 863,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17439
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "D": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.52,
+              "mental_score": 0.56,
+              "semantic_consistency_score": 0.5,
+              "coupling_score": 0.42,
+              "transition_score": 0.58,
+              "error_types": [
+                "agent_identity_mismatch",
+                "recipient_identity_mismatch",
+                "wrong_action_carrier",
+                "object_set_mismatch",
+                "scene_detail_hallucination",
+                "internal_role_inconsistency"
+              ],
+              "reasoning": "The branch captures a gentle blind-box-doll handoff with other toys mostly undisturbed and polite intent, but it assigns the physical handoff to the wrong person, misidentifies Li Qiang/Xiao Fang, omits or replaces the puzzle, and mixes incompatible scene roles.",
+              "option_scores": {
+                "D": {
+                  "physical_score": 0.52,
+                  "mental_score": 0.56,
+                  "semantic_consistency_score": 0.5,
+                  "transition_score": 0.58,
+                  "error_types": [
+                    "agent_identity_mismatch",
+                    "recipient_identity_mismatch",
+                    "wrong_action_carrier",
+                    "object_set_mismatch",
+                    "scene_detail_hallucination",
+                    "internal_role_inconsistency"
+                  ],
+                  "reasoning": "It preserves the broad action of politely transferring the purple blind box doll while leaving other toys in place, but the carrier, recipient identities, object inventory, and role-specific mental updates diverge substantially from gold."
+                }
+              },
+              "confidence": 0.88
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 64033.8783999905,
+              "token_usage": {
+                "input_tokens": 16825,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 872,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17697
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "E": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.28,
+              "mental_score": 0.42,
+              "semantic_consistency_score": 0.34,
+              "coupling_score": 0.32,
+              "transition_score": 0.3,
+              "error_types": [
+                "wrong_character_identity",
+                "wrong_action_carrier",
+                "object_state_mismatch",
+                "handoff_result_mismatch",
+                "incorrect_scene_details",
+                "mental_state_incomplete"
+              ],
+              "reasoning": "The prediction captures the polite overloaded-handoff idea and safety concern, but assigns speech/action to the wrong visible character, keeps key toys on the tray or with Xiao Fang instead of overcrowding Li Qiang's hands, and weakly represents the gold confusion/failed referent inference.",
+              "option_scores": {
+                "E": {
+                  "physical_score": 0.28,
+                  "mental_score": 0.42,
+                  "semantic_consistency_score": 0.34,
+                  "transition_score": 0.3,
+                  "error_types": [
+                    "wrong_character_identity",
+                    "wrong_action_carrier",
+                    "object_state_mismatch",
+                    "handoff_result_mismatch",
+                    "incorrect_scene_details",
+                    "mental_state_incomplete"
+                  ],
+                  "reasoning": "For option E, the prediction recognizes a polite attempt to give all toys despite limited hand capacity, but its physical branch contradicts the gold by not placing all three toys into Li Qiang's hands and by misidentifying Li Qiang/Xiao Fang and the objects."
+                }
+              },
+              "confidence": 0.89
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 61578.70670000557,
+              "token_usage": {
+                "input_tokens": 16724,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 876,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17600
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "F": {
+            "status": "success",
+            "judge": {
+              "item": "next_state_s_{t+1}",
+              "physical_score": 0.55,
+              "mental_score": 0.58,
+              "semantic_consistency_score": 0.56,
+              "coupling_score": 0.62,
+              "transition_score": 0.65,
+              "error_types": [
+                "character_identity_mismatch",
+                "object_identity_mismatch",
+                "missing_referent_specificity",
+                "incorrect_social_context",
+                "mental_state_overgeneralization"
+              ],
+              "reasoning": "The prediction captures the plate being slid toward Li Qiang with all toys still crowded and permission to choose, but it substantially mismatches the gold characters, toy identities, and the nuanced mental consequence that Xiao Fang failed to infer the intended doll.",
+              "option_scores": {
+                "F": {
+                  "physical_score": 0.55,
+                  "mental_score": 0.58,
+                  "semantic_consistency_score": 0.56,
+                  "transition_score": 0.65,
+                  "error_types": [
+                    "character_identity_mismatch",
+                    "object_identity_mismatch",
+                    "missing_referent_specificity",
+                    "incorrect_social_context",
+                    "mental_state_overgeneralization"
+                  ],
+                  "reasoning": "For option F, the core physical transition of sliding the crowded plate/tray toward Li Qiang is mostly present, but the branch uses different people, ages, clothing, and toy set, and its mental update is too generic and misses Li Qiang's puzzlement and Xiao Fang's partial failure to select the blind box doll."
+                }
+              },
+              "confidence": 0.86
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 37689.70830005128,
+              "token_usage": {
+                "input_tokens": 16545,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 872,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 17417
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          }
+        },
+        "score": {
+          "status": "success",
+          "judge": {
+            "item": "score",
+            "physical_score": 0.55,
+            "mental_score": 0.75,
+            "semantic_consistency_score": 0.62,
+            "coupling_score": 0.75,
+            "transition_score": 0.45,
+            "error_types": [
+              "correct_final_action_but_faulty_state_reasoning",
+              "unwarranted_state_transition_references",
+              "underrates_correct_option_physical_plausibility"
+            ],
+            "reasoning": "The prediction ranks D highest and chooses the gold final action, but its table is weakened by hallucinated transition/role-confusion reasoning and an implausibly low physical score for the correct option.",
+            "option_scores": {
+              "A": {
+                "physical_score": 0.8,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.8,
+                "transition_score": 0.65,
+                "error_types": [
+                  "minor_unwarranted_state_reference"
+                ],
+                "reasoning": "A is correctly treated as physically possible but mentally and socially wrong because it disturbs the toys and humiliates Li Qiang."
+              },
+              "B": {
+                "physical_score": 0.9,
+                "mental_score": 0.8,
+                "semantic_consistency_score": 0.75,
+                "transition_score": 0.7,
+                "error_types": [
+                  "minor_unwarranted_state_reference"
+                ],
+                "reasoning": "B is correctly marked physically impossible due to simultaneous two-hand constraints and only weakly aligned with the intended polite transfer."
+              },
+              "C": {
+                "physical_score": 0.65,
+                "mental_score": 0.9,
+                "semantic_consistency_score": 0.75,
+                "transition_score": 0.45,
+                "error_types": [
+                  "unwarranted_state_transition_references",
+                  "possible_physical_underrating"
+                ],
+                "reasoning": "C is correctly rejected for choosing the wrong toy and making a humiliating accusation, though the physical critique depends on unsupported transition details."
+              },
+              "D": {
+                "physical_score": 0.25,
+                "mental_score": 0.8,
+                "semantic_consistency_score": 0.65,
+                "transition_score": 0.3,
+                "error_types": [
+                  "underrates_correct_option_physical_plausibility",
+                  "incorrect_role_confusion",
+                  "unwarranted_state_transition_references"
+                ],
+                "reasoning": "D is correctly chosen and mostly described as goal-aligned and polite, but the prediction wrongly penalizes its physical plausibility using unsupported role-confusion claims."
+              },
+              "E": {
+                "physical_score": 0.55,
+                "mental_score": 0.8,
+                "semantic_consistency_score": 0.7,
+                "transition_score": 0.55,
+                "error_types": [
+                  "possible_physical_overrating",
+                  "unwarranted_state_transition_references"
+                ],
+                "reasoning": "E is reasonably rejected for offering all toys instead of one and overloading Li Qiang's hands, though the physical discussion relies on unsupported state details."
+              },
+              "F": {
+                "physical_score": 0.45,
+                "mental_score": 0.85,
+                "semantic_consistency_score": 0.7,
+                "transition_score": 0.35,
+                "error_types": [
+                  "possible_physical_underrating",
+                  "unwarranted_state_transition_references"
+                ],
+                "reasoning": "F is correctly rejected for failing to infer and hand over only the intended toy, but its low physical score is partly based on unsupported transition assumptions."
+              }
+            },
+            "confidence": 0.78
+          },
+          "metadata": {
+            "model": "gpt-5.5",
+            "latency_ms": 45789.791899966076,
+            "token_usage": {
+              "input_tokens": 7742,
+              "input_tokens_details": {
+                "cached_tokens": 4864
+              },
+              "output_tokens": 1345,
+              "output_tokens_details": {
+                "reasoning_tokens": 516
+              },
+              "total_tokens": 9087
+            },
+            "warnings": [],
+            "call_count": 1,
+            "request": {
+              "payload_type": "text",
+              "input_text_count": 1,
+              "input_image_count": 0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "per_task_type": {
+    "social_cooperation": {
+      "count": 2,
+      "final_action_accuracy": 1.0,
+      "failure_rate": 0.0
+    },
+    "object_transfer": {
+      "count": 1,
+      "final_action_accuracy": 1.0,
+      "failure_rate": 0.0
+    }
+  },
+  "llm_judge": {
+    "enabled": true,
+    "judge_model": "gpt-5.5",
+    "num_judged_items": 27,
+    "summary": {
+      "current_state_s_t": {
+        "physical_score": 0.5967,
+        "mental_score": 0.58,
+        "semantic_consistency_score": 0.59,
+        "coupling_score": 0.6833,
+        "transition_score": 0.5633
+      },
+      "target_agent_observation_o_t": {
+        "physical_score": 0.5133,
+        "mental_score": 0.5133,
+        "semantic_consistency_score": 0.51,
+        "coupling_score": 0.55,
+        "transition_score": 0.48
+      },
+      "next_state_s_{t+1}": {
+        "physical_score": 0.6794,
+        "mental_score": 0.6967,
+        "semantic_consistency_score": 0.6872,
+        "coupling_score": 0.6833,
+        "transition_score": 0.715
+      },
+      "score": {
+        "physical_score": 0.82,
+        "mental_score": 0.8733,
+        "semantic_consistency_score": 0.8433,
+        "coupling_score": 0.8967,
+        "transition_score": 0.78
+      }
+    },
+    "per_sample": [
+      {
+        "sample_id": "1",
+        "task_type": "",
+        "items": {
+          "current_state_s_t": {
+            "status": "success",
+            "judge": {
+              "item": "current_state_s_t",
+              "physical_score": 0.86,
+              "mental_score": 0.82,
+              "semantic_consistency_score": 0.84,
+              "coupling_score": 0.88,
+              "transition_score": 0.83,
+              "error_types": [
+                "minor_spatial_imprecision",
+                "minor_object_attribute_omission",
+                "minor_affective_overgeneralization",
+                "minor_normative_mismatch"
+              ],
+              "reasoning": "The prediction captures the core blocked-desk physical setup and Amy/Lisa belief-goal conflict, with only minor imprecision about exact positions, object attributes, ambient details, and some inferred emotions or norms.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.86,
+                  "mental_score": 0.82,
+                  "semantic_consistency_score": 0.84,
+                  "transition_score": 0.83,
+                  "error_types": [
+                    "minor_spatial_imprecision",
+                    "minor_object_attribute_omission",
+                    "minor_affective_overgeneralization",
+                    "minor_normative_mismatch"
+                  ],
+                  "reasoning": "The state supports the cooperative option because Amy's hands are occupied, Lisa's bag occludes the painting, Lisa falsely thinks Amy is done, and Amy wants polite access without moving Lisa's belongings."
+                }
+              },
+              "confidence": 0.91
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 20487.8589999862,
+              "token_usage": {
+                "input_tokens": 10680,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 757,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 11437
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "target_agent_observation_o_t": {
+            "status": "success",
+            "judge": {
+              "item": "target_agent_observation_o_t",
+              "physical_score": 0.78,
+              "mental_score": 0.74,
+              "semantic_consistency_score": 0.77,
+              "coupling_score": 0.8,
+              "transition_score": 0.76,
+              "error_types": [
+                "overconfident_hidden_state",
+                "minor_spatial_mismatch",
+                "overinferred_other_agent_mental_state",
+                "missing_specific_affordances"
+              ],
+              "reasoning": "The prediction captures Amy's blocked view, occupied hands, Lisa's mistaken comment, and polite goal structure, but it sometimes asserts hidden desk/painting state and over-specifies Lisa's beliefs, motives, and preferences beyond Amy's observation.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.78,
+                  "mental_score": 0.74,
+                  "semantic_consistency_score": 0.77,
+                  "transition_score": 0.76,
+                  "error_types": [
+                    "overconfident_hidden_state",
+                    "minor_spatial_mismatch",
+                    "overinferred_other_agent_mental_state",
+                    "missing_specific_affordances"
+                  ],
+                  "reasoning": "The observation supports the cooperative action but is less faithful than gold because it treats some occluded items as known current facts and attributes too much internal state to Lisa."
+                }
+              },
+              "confidence": 0.86
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 38912.24710003007,
+              "token_usage": {
+                "input_tokens": 10302,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 832,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 11134
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "next_state_s_{t+1}": {
+            "A": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.92,
+                "mental_score": 0.86,
+                "semantic_consistency_score": 0.89,
+                "coupling_score": 0.9,
+                "transition_score": 0.93,
+                "error_types": [
+                  "minor_physical_detail_mismatch",
+                  "minor_mental_temporal_lag",
+                  "minor_mental_detail_omission"
+                ],
+                "reasoning": "Prediction captures the polite request, hands freed, bag no longer blocking, and corrected belief, but is vaguer about Lisa actively moving/apologizing and leaves some of Amy's mental state in a pre-move/request phase.",
+                "option_scores": {
+                  "A": {
+                    "physical_score": 0.92,
+                    "mental_score": 0.86,
+                    "semantic_consistency_score": 0.89,
+                    "transition_score": 0.93,
+                    "error_types": [
+                      "minor_physical_detail_mismatch",
+                      "minor_mental_temporal_lag",
+                      "minor_mental_detail_omission"
+                    ],
+                    "reasoning": "The physical transition is mostly faithful, but the mental state is somewhat overextended and not fully updated to the final post-move state."
+                  }
+                },
+                "confidence": 0.91
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 35816.92420004401,
+                "token_usage": {
+                  "input_tokens": 15212,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 814,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 16026
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "B": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.88,
+                "mental_score": 0.93,
+                "semantic_consistency_score": 0.91,
+                "coupling_score": 0.92,
+                "transition_score": 0.95,
+                "error_types": [
+                  "minor_character_reaction_mismatch",
+                  "minor_spatial_specificity_loss"
+                ],
+                "reasoning": "The prediction faithfully represents option B's physical consequences and social fallout, with only minor mismatch in Lisa's visible reaction and less precise placement details.",
+                "option_scores": {
+                  "B": {
+                    "physical_score": 0.88,
+                    "mental_score": 0.93,
+                    "semantic_consistency_score": 0.91,
+                    "transition_score": 0.95,
+                    "error_types": [
+                      "minor_character_reaction_mismatch",
+                      "minor_spatial_specificity_loss"
+                    ],
+                    "reasoning": "The bag is dumped open, the desk and painting become accessible, Amy prioritizes painting, and Lisa updates to feeling offended and protective, though Lisa is still described physically as cheerful rather than shocked."
+                  }
+                },
+                "confidence": 0.94
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 34492.676299996674,
+                "token_usage": {
+                  "input_tokens": 15170,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 787,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 15957
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "C": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.86,
+                "mental_score": 0.78,
+                "semantic_consistency_score": 0.82,
+                "coupling_score": 0.83,
+                "transition_score": 0.84,
+                "error_types": [
+                  "minor_omission_of_attempted_action",
+                  "slight_overinference_of_lisa_cooperation",
+                  "minor_spatial_detail_mismatch"
+                ],
+                "reasoning": "Prediction correctly preserves the hand-occupancy impossibility so the bag and brush remain unmoved, but under-represents Amy's awkward attempted lift and slightly overstates Lisa's helpful understanding.",
+                "option_scores": {
+                  "C": {
+                    "physical_score": 0.86,
+                    "mental_score": 0.78,
+                    "semantic_consistency_score": 0.82,
+                    "transition_score": 0.84,
+                    "error_types": [
+                      "minor_omission_of_attempted_action",
+                      "slight_overinference_of_lisa_cooperation",
+                      "minor_spatial_detail_mismatch"
+                    ],
+                    "reasoning": "For option C, the predicted next state matches the causal failure of lifting the bag and picking up the brush with both hands occupied, though it omits some visible awkward attempt/contact details and makes Lisa more ready to help than gold supports."
+                  }
+                },
+                "confidence": 0.91
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 33327.999900095165,
+                "token_usage": {
+                  "input_tokens": 15016,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 768,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 15784
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "D": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.87,
+                "mental_score": 0.86,
+                "semantic_consistency_score": 0.89,
+                "coupling_score": 0.9,
+                "transition_score": 0.91,
+                "error_types": [
+                  "minor_overstatement",
+                  "minor_state_detail_mismatch"
+                ],
+                "reasoning": "Prediction is largely faithful to option D and gold, with minor physical overstatement about the painting being fully detached/in Amy's grasp and slight mismatch/understatement of Lisa's immediate hurt embarrassment and Amy's regret.",
+                "option_scores": {
+                  "D": {
+                    "physical_score": 0.87,
+                    "mental_score": 0.86,
+                    "semantic_consistency_score": 0.89,
+                    "transition_score": 0.91,
+                    "error_types": [
+                      "minor_overstatement",
+                      "minor_state_detail_mismatch"
+                    ],
+                    "reasoning": "The branch correctly captures putting items down, shoving the bag aside, damaging the painting, Amy's anger, and Lisa's hurt/conflict response, but slightly overstates detachment/grasp of the painting and omits or weakens some gold mental details like Amy's regret and Lisa feeling unfairly blamed."
+                  }
+                },
+                "confidence": 0.92
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 32105.470500071533,
+                "token_usage": {
+                  "input_tokens": 15330,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 753,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 16083
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "E": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.88,
+                "mental_score": 0.92,
+                "semantic_consistency_score": 0.9,
+                "coupling_score": 0.9,
+                "transition_score": 0.9,
+                "error_types": [
+                  "minor_spatial_detail_mismatch",
+                  "minor_affective_detail_mismatch",
+                  "minor_object_condition_overgeneralization"
+                ],
+                "reasoning": "The prediction matches the option E transition well: Amy remains at the doorway with both items held, the opaque bag still blocks the painting, and she politely abandons painting based on an impossible visual claim, with only minor differences in Lisa's exact position and affect.",
+                "option_scores": {
+                  "E": {
+                    "physical_score": 0.88,
+                    "mental_score": 0.92,
+                    "semantic_consistency_score": 0.9,
+                    "transition_score": 0.9,
+                    "error_types": [
+                      "minor_spatial_detail_mismatch",
+                      "minor_affective_detail_mismatch",
+                      "minor_object_condition_overgeneralization"
+                    ],
+                    "reasoning": "Physical layout and occlusion are preserved and mental updates largely match gold, though Lisa is placed closer to the doorway rather than beside the bag and some object and emotional details are less precise."
+                  }
+                },
+                "confidence": 0.93
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 33402.27339998819,
+                "token_usage": {
+                  "input_tokens": 15007,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 827,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 15834
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "F": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.9,
+                "mental_score": 0.86,
+                "semantic_consistency_score": 0.88,
+                "coupling_score": 0.91,
+                "transition_score": 0.93,
+                "error_types": [
+                  "minor_spatial_detail_mismatch",
+                  "minor_over_inference"
+                ],
+                "reasoning": "The prediction correctly keeps Amy near the doorway after setting items down, leaves the bag blocking the desk, and captures Amy's polite disappointment, with only minor deviations about Lisa's exact position and possible Lisa awareness.",
+                "option_scores": {
+                  "F": {
+                    "physical_score": 0.9,
+                    "mental_score": 0.86,
+                    "semantic_consistency_score": 0.88,
+                    "transition_score": 0.93,
+                    "error_types": [
+                      "minor_spatial_detail_mismatch",
+                      "minor_over_inference"
+                    ],
+                    "reasoning": "The predicted next state is causally faithful to option F: Amy sets the bottle and towel down, avoids moving the bag, skips painting, and maintains a friendly but personally disappointing interaction."
+                  }
+                },
+                "confidence": 0.92
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 35416.076999972574,
+                "token_usage": {
+                  "input_tokens": 14951,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 794,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 15745
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            }
+          },
+          "score": {
+            "status": "success",
+            "judge": {
+              "item": "score",
+              "physical_score": 0.95,
+              "mental_score": 0.95,
+              "semantic_consistency_score": 0.96,
+              "coupling_score": 0.98,
+              "transition_score": 0.95,
+              "error_types": [],
+              "reasoning": "The prediction selects the gold action A and its option-level diagnostics are broadly causally faithful to the stated physical, mental, and social constraints.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 1.0,
+                  "mental_score": 1.0,
+                  "semantic_consistency_score": 1.0,
+                  "transition_score": 1.0,
+                  "error_types": [],
+                  "reasoning": "Correctly identifies A as physically feasible, mentally aligned with Amy's goals, socially appropriate, and the best final action."
+                },
+                "B": {
+                  "physical_score": 1.0,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.9,
+                  "transition_score": 1.0,
+                  "error_types": [],
+                  "reasoning": "Correctly treats B as physically possible but mentally and socially misaligned because Amy handles Lisa's belongings without permission and acts rudely."
+                },
+                "C": {
+                  "physical_score": 1.0,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.9,
+                  "transition_score": 0.9,
+                  "error_types": [],
+                  "reasoning": "Correctly flags C as physically contradictory due to occupied hands and only partially aligned with Amy's communicative goal."
+                },
+                "D": {
+                  "physical_score": 1.0,
+                  "mental_score": 1.0,
+                  "semantic_consistency_score": 0.95,
+                  "transition_score": 1.0,
+                  "error_types": [],
+                  "reasoning": "Correctly rates D as physically coherent but strongly inconsistent with Amy's goals and socially inappropriate."
+                },
+                "E": {
+                  "physical_score": 0.9,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.9,
+                  "transition_score": 0.9,
+                  "error_types": [],
+                  "reasoning": "Correctly notes that E is mostly physically possible except for the implausible visual claim, while conflicting with Amy's desire to finish and clarify."
+                },
+                "F": {
+                  "physical_score": 1.0,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.95,
+                  "transition_score": 1.0,
+                  "error_types": [],
+                  "reasoning": "Correctly treats F as physically and socially gentle but mentally suboptimal because Amy abandons her goal and leaves Lisa's false belief uncorrected."
+                }
+              },
+              "confidence": 0.9
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 42067.504100035876,
+              "token_usage": {
+                "input_tokens": 7820,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 1155,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 8975
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "sample_id": "51",
+        "task_type": "",
+        "items": {
+          "current_state_s_t": {
+            "status": "success",
+            "judge": {
+              "item": "current_state_s_t",
+              "physical_score": 0.75,
+              "mental_score": 0.82,
+              "semantic_consistency_score": 0.79,
+              "coupling_score": 0.82,
+              "transition_score": 0.74,
+              "error_types": [
+                "appearance_mismatch",
+                "motion_state_mismatch",
+                "missing_swing_motion",
+                "missing_safety_boundary_detail",
+                "minor_mental_omissions",
+                "extraneous_details"
+              ],
+              "reasoning": "The prediction captures the core noisy playground, swing-boundary setup, Xiao Mei's uncertainty, and the girls' friendly approach, but it mismatches clothing and motion details, omits the nearly stopped swing and some safety/hopeful goal nuances, and adds unsupported specifics.",
+              "option_scores": {},
+              "confidence": 0.86
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 132344.8090000311,
+              "token_usage": {
+                "input_tokens": 11311,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 5893,
+                "output_tokens_details": {
+                  "reasoning_tokens": 5696
+                },
+                "total_tokens": 17204
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "target_agent_observation_o_t": {
+            "status": "success",
+            "judge": {
+              "item": "target_agent_observation_o_t",
+              "physical_score": 0.58,
+              "mental_score": 0.68,
+              "semantic_consistency_score": 0.62,
+              "coupling_score": 0.65,
+              "transition_score": 0.6,
+              "error_types": [
+                "wrong_visual_attributes",
+                "spatial_mismatch",
+                "missing_motion_state",
+                "over-inferred_other_agents",
+                "added_unobserved_background_details",
+                "missing_key_observed_cues"
+              ],
+              "reasoning": "The prediction captures Xiao Mei on the swing, noisy playground, classmates nearby smiling, and her uncertainty, but it changes clothing/positions, omits key cues like nodding, nearly stopped swing, rubber mat, and over-infers friendliness and background details.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.58,
+                  "mental_score": 0.68,
+                  "semantic_consistency_score": 0.62,
+                  "transition_score": 0.6,
+                  "error_types": [
+                    "wrong_visual_attributes",
+                    "spatial_mismatch",
+                    "missing_motion_state",
+                    "over-inferred_other_agents",
+                    "added_unobserved_background_details",
+                    "missing_key_observed_cues"
+                  ],
+                  "reasoning": "Same observation judgment applies because the predicted o_t is option-independent and only partially matches Xiao Mei's perceptual state."
+                }
+              },
+              "confidence": 0.88
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 125506.4454000676,
+              "token_usage": {
+                "input_tokens": 10825,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 847,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 11672
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "next_state_s_{t+1}": {
+            "A": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.82,
+                "mental_score": 0.72,
+                "semantic_consistency_score": 0.77,
+                "coupling_score": 0.78,
+                "transition_score": 0.84,
+                "error_types": [
+                  "understated_social_embarrassment",
+                  "incorrect_or_missing_affective_update",
+                  "minor_physical_detail_mismatch",
+                  "over_softened_interpersonal_tension"
+                ],
+                "reasoning": "The prediction captures Xiao Mei stopping the swing and loudly challenging the girls, but it softens the public accusation's awkward effect and keeps Xiao Hong and Xiao Fang too friendly rather than embarrassed or uncomfortable.",
+                "option_scores": {
+                  "A": {
+                    "physical_score": 0.82,
+                    "mental_score": 0.72,
+                    "semantic_consistency_score": 0.77,
+                    "transition_score": 0.84,
+                    "error_types": [
+                      "understated_social_embarrassment",
+                      "incorrect_or_missing_affective_update",
+                      "minor_physical_detail_mismatch",
+                      "over_softened_interpersonal_tension"
+                    ],
+                    "reasoning": "Physical transition is mostly faithful, but mental consequences are partially wrong because the gold state makes the exchange publicly awkward and embarrassing while the prediction treats the girls as mostly friendly, concerned, and ready to explain."
+                  }
+                },
+                "confidence": 0.9
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 36024.73349997308,
+                "token_usage": {
+                  "input_tokens": 16476,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 839,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17315
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "B": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.82,
+                "mental_score": 0.78,
+                "semantic_consistency_score": 0.76,
+                "coupling_score": 0.68,
+                "transition_score": 0.8,
+                "error_types": [
+                  "minor_physical_detail_mismatch",
+                  "mental_physical_inconsistency",
+                  "overstated_social_update"
+                ],
+                "reasoning": "Prediction correctly identifies the impossible reach/tap while seated and holding both chains, but its mental state inconsistently treats the tap as perceived and adds somewhat stronger social clarity than gold.",
+                "option_scores": {
+                  "B": {
+                    "physical_score": 0.82,
+                    "mental_score": 0.78,
+                    "semantic_consistency_score": 0.76,
+                    "transition_score": 0.8,
+                    "error_types": [
+                      "minor_physical_detail_mismatch",
+                      "mental_physical_inconsistency",
+                      "overstated_social_update"
+                    ],
+                    "reasoning": "Physical branch largely matches gold by preserving distance, chain grip, seating, and failed contact, while mental branch partly conflicts by referencing a successful tap and over-specifying responses."
+                  }
+                },
+                "confidence": 0.87
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 36080.1441000076,
+                "token_usage": {
+                  "input_tokens": 16306,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 805,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17111
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "C": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.91,
+                "mental_score": 0.94,
+                "semantic_consistency_score": 0.93,
+                "coupling_score": 0.95,
+                "transition_score": 0.96,
+                "error_types": [
+                  "minor_detail_mismatch",
+                  "minor_omission"
+                ],
+                "reasoning": "The prediction captures the safe stopped swing, boundary-respecting positions, polite question, and cautious-friendly mental update, with only minor mismatches in clothing/object details and omission of Xiao Hong beginning to answer.",
+                "option_scores": {
+                  "C": {
+                    "physical_score": 0.91,
+                    "mental_score": 0.94,
+                    "semantic_consistency_score": 0.93,
+                    "transition_score": 0.96,
+                    "error_types": [
+                      "minor_detail_mismatch",
+                      "minor_omission"
+                    ],
+                    "reasoning": "Option C is causally faithful to the gold transition: Xiao Mei safely stops the swing, asks politely, the other girls remain outside the line and become encouraged, though the predicted branch misses the explicit start of Xiao Hong's reply and differs in superficial appearance details."
+                  }
+                },
+                "confidence": 0.92
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 38723.33249996882,
+                "token_usage": {
+                  "input_tokens": 16437,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 804,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17241
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "D": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.9,
+                "mental_score": 0.82,
+                "semantic_consistency_score": 0.86,
+                "coupling_score": 0.88,
+                "transition_score": 0.9,
+                "error_types": [
+                  "minor_appearance_mismatch",
+                  "understated_negative_social_effect",
+                  "minor_safety_boundary_omission"
+                ],
+                "reasoning": "The prediction correctly models Xiao Mei leaving the swing, pushing between the girls, and accusing them, but it softens the resulting hurt/fear and omits some safety-line and appearance details.",
+                "option_scores": {
+                  "D": {
+                    "physical_score": 0.9,
+                    "mental_score": 0.82,
+                    "semantic_consistency_score": 0.86,
+                    "transition_score": 0.9,
+                    "error_types": [
+                      "minor_appearance_mismatch",
+                      "understated_negative_social_effect",
+                      "minor_safety_boundary_omission"
+                    ],
+                    "reasoning": "For option D, the physical transition is largely faithful, while the mental state is directionally correct but too conciliatory for Xiao Hong and Xiao Fang compared with the gold conflictual aftermath."
+                  }
+                },
+                "confidence": 0.91
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 40294.950600015,
+                "token_usage": {
+                  "input_tokens": 16575,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 813,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17388
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "E": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.42,
+                "mental_score": 0.68,
+                "semantic_consistency_score": 0.55,
+                "coupling_score": 0.5,
+                "transition_score": 0.52,
+                "error_types": [
+                  "missing_physical_inconsistency",
+                  "omitted_action_effect",
+                  "physical_state_mismatch",
+                  "over_optimistic_social_inference"
+                ],
+                "reasoning": "The prediction captures the polite swing offer and some misunderstanding, but it fails to represent the gold branch's key physical impossibility of being seated holding chains while walking behind the frame and softens the confused/avoidant social outcome.",
+                "option_scores": {
+                  "E": {
+                    "physical_score": 0.42,
+                    "mental_score": 0.68,
+                    "semantic_consistency_score": 0.55,
+                    "transition_score": 0.52,
+                    "error_types": [
+                      "missing_physical_inconsistency",
+                      "omitted_action_effect",
+                      "physical_state_mismatch",
+                      "over_optimistic_social_inference"
+                    ],
+                    "reasoning": "For option E, the predicted state keeps Xiao Mei seated and speaking but omits the impossible walking-behind-frame component that gold explicitly flags, while mostly preserving the misunderstanding and failure to ask why they came."
+                  }
+                },
+                "confidence": 0.86
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 36685.004299972206,
+                "token_usage": {
+                  "input_tokens": 16297,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 836,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17133
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "F": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.88,
+                "mental_score": 0.74,
+                "semantic_consistency_score": 0.8,
+                "coupling_score": 0.82,
+                "transition_score": 0.86,
+                "error_types": [
+                  "minor_physical_detail_mismatch",
+                  "mental_state_over_inference",
+                  "appearance_mismatch"
+                ],
+                "reasoning": "Prediction captures Xiao Mei safely leaving an empty stopped swing, but softens the missed-opportunity outcome by making Xiao Hong and Xiao Fang more actively intent on clarifying than the gold state.",
+                "option_scores": {
+                  "F": {
+                    "physical_score": 0.88,
+                    "mental_score": 0.74,
+                    "semantic_consistency_score": 0.8,
+                    "transition_score": 0.86,
+                    "error_types": [
+                      "minor_physical_detail_mismatch",
+                      "mental_state_over_inference",
+                      "appearance_mismatch"
+                    ],
+                    "reasoning": "Physical transition is mostly faithful, while mental consequences are partly over-optimistic and less clearly describe Xiao Mei abandoning the chance to learn their intent."
+                  }
+                },
+                "confidence": 0.91
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 33451.607300085016,
+                "token_usage": {
+                  "input_tokens": 16324,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 729,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17053
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            }
+          },
+          "score": {
+            "status": "success",
+            "judge": {
+              "item": "score",
+              "physical_score": 0.96,
+              "mental_score": 0.92,
+              "semantic_consistency_score": 0.95,
+              "coupling_score": 0.96,
+              "transition_score": 0.94,
+              "error_types": [],
+              "reasoning": "The prediction selects the gold action C and its option-level reasoning is largely causally faithful, with only minor possible softness in some mental-score gradations.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 1.0,
+                  "mental_score": 0.85,
+                  "semantic_consistency_score": 0.9,
+                  "transition_score": 0.95,
+                  "error_types": [],
+                  "reasoning": "It correctly treats A as physically plausible but socially and mentally compromised by a loud accusatory challenge."
+                },
+                "B": {
+                  "physical_score": 0.95,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.92,
+                  "transition_score": 0.9,
+                  "error_types": [],
+                  "reasoning": "It correctly identifies the impossible reach/tap as the main flaw while crediting the non-accusatory intent."
+                },
+                "C": {
+                  "physical_score": 1.0,
+                  "mental_score": 1.0,
+                  "semantic_consistency_score": 1.0,
+                  "transition_score": 1.0,
+                  "error_types": [],
+                  "reasoning": "It matches the gold choice and accurately explains C as safe, polite, clarifying, and friendship-preserving."
+                },
+                "D": {
+                  "physical_score": 0.9,
+                  "mental_score": 1.0,
+                  "semantic_consistency_score": 0.95,
+                  "transition_score": 0.95,
+                  "error_types": [],
+                  "reasoning": "It correctly rejects D for accusation, aggression, and failure to preserve friendliness despite possible physical execution."
+                },
+                "E": {
+                  "physical_score": 1.0,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.92,
+                  "transition_score": 0.9,
+                  "error_types": [],
+                  "reasoning": "It correctly marks E as physically contradictory and only partially mentally/socially useful because it avoids clarification."
+                },
+                "F": {
+                  "physical_score": 1.0,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.92,
+                  "transition_score": 0.95,
+                  "error_types": [],
+                  "reasoning": "It correctly sees F as physically safe and polite but inferior because walking away fails the clarification goal."
+                }
+              },
+              "confidence": 0.93
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 38614.88050001208,
+              "token_usage": {
+                "input_tokens": 7679,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 1130,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 8809
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "sample_id": "76",
+        "task_type": "",
+        "items": {
+          "current_state_s_t": {
+            "status": "success",
+            "judge": {
+              "item": "current_state_s_t",
+              "physical_score": 0.18,
+              "mental_score": 0.1,
+              "semantic_consistency_score": 0.14,
+              "coupling_score": 0.35,
+              "transition_score": 0.12,
+              "error_types": [
+                "wrong_agents",
+                "wrong_object_set",
+                "wrong_spatial_relations",
+                "missing_target_agent",
+                "missing_request_event",
+                "missing_referential_cues",
+                "hallucinated_roles",
+                "hallucinated_mental_state"
+              ],
+              "reasoning": "The prediction describes a broadly similar living-room toy scene but replaces the named children, requested transfer setup, crowded plate contents, curtain-viewing context, and Xiao Fang/Li Qiang mental states with mostly unrelated generic family-play details.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.18,
+                  "mental_score": 0.1,
+                  "semantic_consistency_score": 0.14,
+                  "transition_score": 0.12,
+                  "error_types": [
+                    "wrong_agents",
+                    "wrong_object_set",
+                    "wrong_spatial_relations",
+                    "missing_target_agent",
+                    "missing_request_event",
+                    "missing_referential_cues",
+                    "hallucinated_roles",
+                    "hallucinated_mental_state"
+                  ],
+                  "reasoning": "The state is not semantically faithful to the gold setup needed to evaluate option A because it omits Li Qiang, Xiao Fang, the plate arrangement, and the politeness/curtain context."
+                },
+                "B": {
+                  "physical_score": 0.18,
+                  "mental_score": 0.1,
+                  "semantic_consistency_score": 0.14,
+                  "transition_score": 0.12,
+                  "error_types": [
+                    "wrong_agents",
+                    "wrong_object_set",
+                    "wrong_spatial_relations",
+                    "missing_target_agent",
+                    "missing_request_event",
+                    "missing_referential_cues",
+                    "hallucinated_roles",
+                    "hallucinated_mental_state"
+                  ],
+                  "reasoning": "The prediction lacks the gold physical constraints about Xiao Fang, Li Qiang, the crowded plate, and the single reachable blind box doll, so it cannot support option B reasoning."
+                },
+                "C": {
+                  "physical_score": 0.18,
+                  "mental_score": 0.1,
+                  "semantic_consistency_score": 0.14,
+                  "transition_score": 0.12,
+                  "error_types": [
+                    "wrong_agents",
+                    "wrong_object_set",
+                    "wrong_spatial_relations",
+                    "missing_target_agent",
+                    "missing_request_event",
+                    "missing_referential_cues",
+                    "hallucinated_roles",
+                    "hallucinated_mental_state"
+                  ],
+                  "reasoning": "The prediction only partially overlaps on a red interactive toy and misses the gold evidence that Li Qiang wants the blind box doll and should not be shamed."
+                },
+                "D": {
+                  "physical_score": 0.18,
+                  "mental_score": 0.1,
+                  "semantic_consistency_score": 0.14,
+                  "transition_score": 0.12,
+                  "error_types": [
+                    "wrong_agents",
+                    "wrong_object_set",
+                    "wrong_spatial_relations",
+                    "missing_target_agent",
+                    "missing_request_event",
+                    "missing_referential_cues",
+                    "hallucinated_roles",
+                    "hallucinated_mental_state"
+                  ],
+                  "reasoning": "Although it includes a purple bunny-like doll in a living-room toy scene, it incorrectly has another child holding it and omits the named request, reachability, and politeness constraints central to option D."
+                },
+                "E": {
+                  "physical_score": 0.18,
+                  "mental_score": 0.1,
+                  "semantic_consistency_score": 0.14,
+                  "transition_score": 0.12,
+                  "error_types": [
+                    "wrong_agents",
+                    "wrong_object_set",
+                    "wrong_spatial_relations",
+                    "missing_target_agent",
+                    "missing_request_event",
+                    "missing_referential_cues",
+                    "hallucinated_roles",
+                    "hallucinated_mental_state"
+                  ],
+                  "reasoning": "The predicted state does not represent Li Qiang's limited hand capacity or the three specific shared toys on the crowded plate."
+                },
+                "F": {
+                  "physical_score": 0.18,
+                  "mental_score": 0.1,
+                  "semantic_consistency_score": 0.14,
+                  "transition_score": 0.12,
+                  "error_types": [
+                    "wrong_agents",
+                    "wrong_object_set",
+                    "wrong_spatial_relations",
+                    "missing_target_agent",
+                    "missing_request_event",
+                    "missing_referential_cues",
+                    "hallucinated_roles",
+                    "hallucinated_mental_state"
+                  ],
+                  "reasoning": "The prediction contains a tray-like object but misses the gold crowded-plate transfer situation and the need for Xiao Fang to choose only the intended toy."
+                }
+              },
+              "confidence": 0.96
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 71571.68400008231,
+              "token_usage": {
+                "input_tokens": 11506,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 1634,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 13140
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "target_agent_observation_o_t": {
+            "status": "success",
+            "judge": {
+              "item": "target_agent_observation_o_t",
+              "physical_score": 0.18,
+              "mental_score": 0.12,
+              "semantic_consistency_score": 0.14,
+              "coupling_score": 0.2,
+              "transition_score": 0.08,
+              "error_types": [
+                "wrong_characters",
+                "missing_key_request",
+                "wrong_object_layout",
+                "wrong_contact_state",
+                "missing_target_inference",
+                "temporal_state_mismatch",
+                "target_perspective_incomplete"
+              ],
+              "reasoning": "The prediction describes a different living-room toy-play state with adults and Xiao Fang holding a bunny toy, while the gold requires Li Qiang's request, the crowded plate with puzzle/musical toy/blind-box doll, and Xiao Fang's inference about politely handing only the doll.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.25,
+                  "mental_score": 0.15,
+                  "semantic_consistency_score": 0.2,
+                  "transition_score": 0.15,
+                  "error_types": [
+                    "partially_correct_referent",
+                    "wrong_social_inference",
+                    "disturbs_objects",
+                    "impolite_action"
+                  ],
+                  "reasoning": "It selects the blind box doll but wrongly uses humiliating speech and disturbs the other toys, conflicting with the observed need for politeness and careful transfer."
+                },
+                "B": {
+                  "physical_score": 0.15,
+                  "mental_score": 0.2,
+                  "semantic_consistency_score": 0.12,
+                  "transition_score": 0.1,
+                  "error_types": [
+                    "physically_impossible_action",
+                    "wrong_hand_availability",
+                    "object_handling_error"
+                  ],
+                  "reasoning": "It targets the right toy politely in spirit, but the simultaneous plate-supporting and single-toy lifting is physically impossible from Xiao Fang's state."
+                },
+                "C": {
+                  "physical_score": 0.1,
+                  "mental_score": 0.05,
+                  "semantic_consistency_score": 0.08,
+                  "transition_score": 0.05,
+                  "error_types": [
+                    "wrong_referent",
+                    "impolite_action",
+                    "wrong_social_inference"
+                  ],
+                  "reasoning": "It chooses the musical toy instead of the inferred blind box doll and adds accusatory speech inconsistent with Xiao Fang's polite goal."
+                },
+                "D": {
+                  "physical_score": 1.0,
+                  "mental_score": 1.0,
+                  "semantic_consistency_score": 1.0,
+                  "transition_score": 1.0,
+                  "error_types": [],
+                  "reasoning": "It matches Xiao Fang's observable inference, reachable object constraints, careful handling of the crowded plate, and polite response to Li Qiang."
+                },
+                "E": {
+                  "physical_score": 0.25,
+                  "mental_score": 0.35,
+                  "semantic_consistency_score": 0.25,
+                  "transition_score": 0.2,
+                  "error_types": [
+                    "overbroad_transfer",
+                    "capacity_constraint_violation",
+                    "fails_intended_referent"
+                  ],
+                  "reasoning": "It is polite but fails to infer and hand over only the intended toy and overloads Li Qiang's hands."
+                },
+                "F": {
+                  "physical_score": 0.3,
+                  "mental_score": 0.3,
+                  "semantic_consistency_score": 0.25,
+                  "transition_score": 0.25,
+                  "error_types": [
+                    "fails_intended_referent",
+                    "disturbs_crowded_plate",
+                    "unsafe_object_handling"
+                  ],
+                  "reasoning": "It avoids direct insult but fails to infer the specific toy and risks disturbing the crowded shared plate."
+                }
+              },
+              "confidence": 0.95
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 75635.5056000175,
+              "token_usage": {
+                "input_tokens": 11355,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 1372,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 12727
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          },
+          "next_state_s_{t+1}": {
+            "A": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.38,
+                "mental_score": 0.36,
+                "semantic_consistency_score": 0.43,
+                "coupling_score": 0.44,
+                "transition_score": 0.4,
+                "error_types": [
+                  "wrong_characters",
+                  "missing_recipient",
+                  "missing_object",
+                  "incomplete_physical_effects",
+                  "incorrect_initial_contact",
+                  "under-specified_transfer",
+                  "mental_state_misattribution"
+                ],
+                "reasoning": "The prediction captures Xiao Fang holding the doll, shoving the musical toy, speaking the accusation, and creating tension, but it uses the wrong participants, omits Li Qiang's receiving/embarrassment and the puzzle displacement, and is inconsistent with the doll already being held.",
+                "option_scores": {
+                  "A": {
+                    "physical_score": 0.38,
+                    "mental_score": 0.36,
+                    "semantic_consistency_score": 0.43,
+                    "transition_score": 0.4,
+                    "error_types": [
+                      "wrong_characters",
+                      "missing_recipient",
+                      "missing_object",
+                      "incomplete_physical_effects",
+                      "incorrect_initial_contact",
+                      "under-specified_transfer",
+                      "mental_state_misattribution"
+                    ],
+                    "reasoning": "For option A, the core rude doll pickup and musical-toy shove are partially represented, but the branch replaces Li Qiang and Zhang Li with unrelated people, misses the animal puzzle being shoved, and fails to model Li Qiang receiving the doll and feeling embarrassed."
+                  }
+                },
+                "confidence": 0.9
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 57701.117699965835,
+                "token_usage": {
+                  "input_tokens": 16807,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 887,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17694
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "B": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.12,
+                "mental_score": 0.28,
+                "semantic_consistency_score": 0.2,
+                "coupling_score": 0.18,
+                "transition_score": 0.18,
+                "error_types": [
+                  "wrong_scene_entities",
+                  "missing_physical_transition",
+                  "incorrect_actor_identities",
+                  "missed_hand_occupancy_contradiction",
+                  "object_mismatch",
+                  "weak_action_coupling"
+                ],
+                "reasoning": "The prediction keeps a largely unrelated living-room toy scene and only mentally notes awkward hand use, while the gold branch requires the specific children, plate toys, and explicit physical contradiction of Xiao Fang using both hands under the plate and on the doll.",
+                "option_scores": {
+                  "B": {
+                    "physical_score": 0.12,
+                    "mental_score": 0.28,
+                    "semantic_consistency_score": 0.2,
+                    "transition_score": 0.18,
+                    "error_types": [
+                      "wrong_scene_entities",
+                      "missing_physical_transition",
+                      "incorrect_actor_identities",
+                      "missed_hand_occupancy_contradiction",
+                      "object_mismatch",
+                      "weak_action_coupling"
+                    ],
+                    "reasoning": "For option B, the predicted branch fails to instantiate the gold handoff contradiction physically and misidentifies the characters and objects, though it partially captures that the attempted simultaneous plate balancing and doll handoff is awkward."
+                  }
+                },
+                "confidence": 0.93
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 59029.314500046894,
+                "token_usage": {
+                  "input_tokens": 16487,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 787,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17274
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "C": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.32,
+                "mental_score": 0.45,
+                "semantic_consistency_score": 0.38,
+                "coupling_score": 0.35,
+                "transition_score": 0.42,
+                "error_types": [
+                  "wrong_action_carrier",
+                  "wrong_character_identities",
+                  "wrong_recipient",
+                  "missing_key_object_state",
+                  "incorrect_scene_details",
+                  "incomplete_mental_updates"
+                ],
+                "reasoning": "The prediction captures that the musical sound toy is selected and a sharp accusation creates tension, but it wrongly assigns the physical action and speech to an adult man, omits Li Qiang/Zhang Li and Li Qiang's continued interest in the blind box doll, and uses many incompatible scene details.",
+                "option_scores": {
+                  "C": {
+                    "physical_score": 0.32,
+                    "mental_score": 0.45,
+                    "semantic_consistency_score": 0.38,
+                    "transition_score": 0.42,
+                    "error_types": [
+                      "wrong_action_carrier",
+                      "wrong_character_identities",
+                      "wrong_recipient",
+                      "missing_key_object_state",
+                      "incorrect_scene_details",
+                      "incomplete_mental_updates"
+                    ],
+                    "reasoning": "For option C, the red musical toy being lifted and the rude accusation are partially represented, but the agent, recipient, character identities, blind-box preference, and plate contents are substantially wrong."
+                  }
+                },
+                "confidence": 0.91
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 49354.98509998433,
+                "token_usage": {
+                  "input_tokens": 16576,
+                  "input_tokens_details": {
+                    "cached_tokens": 0
+                  },
+                  "output_tokens": 863,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17439
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "D": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.52,
+                "mental_score": 0.56,
+                "semantic_consistency_score": 0.5,
+                "coupling_score": 0.42,
+                "transition_score": 0.58,
+                "error_types": [
+                  "agent_identity_mismatch",
+                  "recipient_identity_mismatch",
+                  "wrong_action_carrier",
+                  "object_set_mismatch",
+                  "scene_detail_hallucination",
+                  "internal_role_inconsistency"
+                ],
+                "reasoning": "The branch captures a gentle blind-box-doll handoff with other toys mostly undisturbed and polite intent, but it assigns the physical handoff to the wrong person, misidentifies Li Qiang/Xiao Fang, omits or replaces the puzzle, and mixes incompatible scene roles.",
+                "option_scores": {
+                  "D": {
+                    "physical_score": 0.52,
+                    "mental_score": 0.56,
+                    "semantic_consistency_score": 0.5,
+                    "transition_score": 0.58,
+                    "error_types": [
+                      "agent_identity_mismatch",
+                      "recipient_identity_mismatch",
+                      "wrong_action_carrier",
+                      "object_set_mismatch",
+                      "scene_detail_hallucination",
+                      "internal_role_inconsistency"
+                    ],
+                    "reasoning": "It preserves the broad action of politely transferring the purple blind box doll while leaving other toys in place, but the carrier, recipient identities, object inventory, and role-specific mental updates diverge substantially from gold."
+                  }
+                },
+                "confidence": 0.88
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 64033.8783999905,
+                "token_usage": {
+                  "input_tokens": 16825,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 872,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17697
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "E": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.28,
+                "mental_score": 0.42,
+                "semantic_consistency_score": 0.34,
+                "coupling_score": 0.32,
+                "transition_score": 0.3,
+                "error_types": [
+                  "wrong_character_identity",
+                  "wrong_action_carrier",
+                  "object_state_mismatch",
+                  "handoff_result_mismatch",
+                  "incorrect_scene_details",
+                  "mental_state_incomplete"
+                ],
+                "reasoning": "The prediction captures the polite overloaded-handoff idea and safety concern, but assigns speech/action to the wrong visible character, keeps key toys on the tray or with Xiao Fang instead of overcrowding Li Qiang's hands, and weakly represents the gold confusion/failed referent inference.",
+                "option_scores": {
+                  "E": {
+                    "physical_score": 0.28,
+                    "mental_score": 0.42,
+                    "semantic_consistency_score": 0.34,
+                    "transition_score": 0.3,
+                    "error_types": [
+                      "wrong_character_identity",
+                      "wrong_action_carrier",
+                      "object_state_mismatch",
+                      "handoff_result_mismatch",
+                      "incorrect_scene_details",
+                      "mental_state_incomplete"
+                    ],
+                    "reasoning": "For option E, the prediction recognizes a polite attempt to give all toys despite limited hand capacity, but its physical branch contradicts the gold by not placing all three toys into Li Qiang's hands and by misidentifying Li Qiang/Xiao Fang and the objects."
+                  }
+                },
+                "confidence": 0.89
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 61578.70670000557,
+                "token_usage": {
+                  "input_tokens": 16724,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 876,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17600
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            },
+            "F": {
+              "status": "success",
+              "judge": {
+                "item": "next_state_s_{t+1}",
+                "physical_score": 0.55,
+                "mental_score": 0.58,
+                "semantic_consistency_score": 0.56,
+                "coupling_score": 0.62,
+                "transition_score": 0.65,
+                "error_types": [
+                  "character_identity_mismatch",
+                  "object_identity_mismatch",
+                  "missing_referent_specificity",
+                  "incorrect_social_context",
+                  "mental_state_overgeneralization"
+                ],
+                "reasoning": "The prediction captures the plate being slid toward Li Qiang with all toys still crowded and permission to choose, but it substantially mismatches the gold characters, toy identities, and the nuanced mental consequence that Xiao Fang failed to infer the intended doll.",
+                "option_scores": {
+                  "F": {
+                    "physical_score": 0.55,
+                    "mental_score": 0.58,
+                    "semantic_consistency_score": 0.56,
+                    "transition_score": 0.65,
+                    "error_types": [
+                      "character_identity_mismatch",
+                      "object_identity_mismatch",
+                      "missing_referent_specificity",
+                      "incorrect_social_context",
+                      "mental_state_overgeneralization"
+                    ],
+                    "reasoning": "For option F, the core physical transition of sliding the crowded plate/tray toward Li Qiang is mostly present, but the branch uses different people, ages, clothing, and toy set, and its mental update is too generic and misses Li Qiang's puzzlement and Xiao Fang's partial failure to select the blind box doll."
+                  }
+                },
+                "confidence": 0.86
+              },
+              "metadata": {
+                "model": "gpt-5.5",
+                "latency_ms": 37689.70830005128,
+                "token_usage": {
+                  "input_tokens": 16545,
+                  "input_tokens_details": {
+                    "cached_tokens": 4864
+                  },
+                  "output_tokens": 872,
+                  "output_tokens_details": {
+                    "reasoning_tokens": 516
+                  },
+                  "total_tokens": 17417
+                },
+                "warnings": [],
+                "call_count": 1,
+                "request": {
+                  "payload_type": "text",
+                  "input_text_count": 1,
+                  "input_image_count": 0
+                }
+              }
+            }
+          },
+          "score": {
+            "status": "success",
+            "judge": {
+              "item": "score",
+              "physical_score": 0.55,
+              "mental_score": 0.75,
+              "semantic_consistency_score": 0.62,
+              "coupling_score": 0.75,
+              "transition_score": 0.45,
+              "error_types": [
+                "correct_final_action_but_faulty_state_reasoning",
+                "unwarranted_state_transition_references",
+                "underrates_correct_option_physical_plausibility"
+              ],
+              "reasoning": "The prediction ranks D highest and chooses the gold final action, but its table is weakened by hallucinated transition/role-confusion reasoning and an implausibly low physical score for the correct option.",
+              "option_scores": {
+                "A": {
+                  "physical_score": 0.8,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.8,
+                  "transition_score": 0.65,
+                  "error_types": [
+                    "minor_unwarranted_state_reference"
+                  ],
+                  "reasoning": "A is correctly treated as physically possible but mentally and socially wrong because it disturbs the toys and humiliates Li Qiang."
+                },
+                "B": {
+                  "physical_score": 0.9,
+                  "mental_score": 0.8,
+                  "semantic_consistency_score": 0.75,
+                  "transition_score": 0.7,
+                  "error_types": [
+                    "minor_unwarranted_state_reference"
+                  ],
+                  "reasoning": "B is correctly marked physically impossible due to simultaneous two-hand constraints and only weakly aligned with the intended polite transfer."
+                },
+                "C": {
+                  "physical_score": 0.65,
+                  "mental_score": 0.9,
+                  "semantic_consistency_score": 0.75,
+                  "transition_score": 0.45,
+                  "error_types": [
+                    "unwarranted_state_transition_references",
+                    "possible_physical_underrating"
+                  ],
+                  "reasoning": "C is correctly rejected for choosing the wrong toy and making a humiliating accusation, though the physical critique depends on unsupported transition details."
+                },
+                "D": {
+                  "physical_score": 0.25,
+                  "mental_score": 0.8,
+                  "semantic_consistency_score": 0.65,
+                  "transition_score": 0.3,
+                  "error_types": [
+                    "underrates_correct_option_physical_plausibility",
+                    "incorrect_role_confusion",
+                    "unwarranted_state_transition_references"
+                  ],
+                  "reasoning": "D is correctly chosen and mostly described as goal-aligned and polite, but the prediction wrongly penalizes its physical plausibility using unsupported role-confusion claims."
+                },
+                "E": {
+                  "physical_score": 0.55,
+                  "mental_score": 0.8,
+                  "semantic_consistency_score": 0.7,
+                  "transition_score": 0.55,
+                  "error_types": [
+                    "possible_physical_overrating",
+                    "unwarranted_state_transition_references"
+                  ],
+                  "reasoning": "E is reasonably rejected for offering all toys instead of one and overloading Li Qiang's hands, though the physical discussion relies on unsupported state details."
+                },
+                "F": {
+                  "physical_score": 0.45,
+                  "mental_score": 0.85,
+                  "semantic_consistency_score": 0.7,
+                  "transition_score": 0.35,
+                  "error_types": [
+                    "possible_physical_underrating",
+                    "unwarranted_state_transition_references"
+                  ],
+                  "reasoning": "F is correctly rejected for failing to infer and hand over only the intended toy, but its low physical score is partly based on unsupported transition assumptions."
+                }
+              },
+              "confidence": 0.78
+            },
+            "metadata": {
+              "model": "gpt-5.5",
+              "latency_ms": 45789.791899966076,
+              "token_usage": {
+                "input_tokens": 7742,
+                "input_tokens_details": {
+                  "cached_tokens": 4864
+                },
+                "output_tokens": 1345,
+                "output_tokens_details": {
+                  "reasoning_tokens": 516
+                },
+                "total_tokens": 9087
+              },
+              "warnings": [],
+              "call_count": 1,
+              "request": {
+                "payload_type": "text",
+                "input_text_count": 1,
+                "input_image_count": 0
+              }
+            }
+          }
+        }
+      }
+    ],
+    "failed_items": []
+  },
+  "state_physical_judge_score": 0.5967,
+  "state_mental_judge_score": 0.58,
+  "observation_physical_judge_score": 0.5133,
+  "observation_mental_judge_score": 0.5133,
+  "next_state_physical_judge_score": 0.6794,
+  "next_state_mental_judge_score": 0.6967,
+  "transition_reasonableness_score": 0.715,
+  "coupling_validity_score": 0.6389
+}

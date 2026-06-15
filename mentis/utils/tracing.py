@@ -120,7 +120,7 @@ def build_readable_run_id(
     sample_scope: str,
     created_at: datetime | None = None,
 ) -> str:
-    timestamp = (created_at or datetime.now()).strftime("%Y%m%d-%H%M%S")
+    timestamp = (created_at or datetime.now()).strftime("%Y%m%d")
     return "_".join(
         [
             safe_slug(run_type),

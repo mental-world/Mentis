@@ -1,7 +1,8 @@
 ﻿{
-    "run_id":  "eval_judge_gpt5_5_samples-1-51-76_20260614-014407",
+    "run_id":  "eval_full_mwm_judge_gpt5_5_samples-1-51-76_20260614",
     "run_type":  "evaluation",
     "mode":  "judge",
+    "prediction_ablation":  "full_mwm",
     "model":  "gpt-5.5",
     "sample_scope":  "selected",
     "sample_count":  3,
@@ -10,9 +11,9 @@
                        "51",
                        "76"
                    ],
-    "pred":  "outputs/gpt5_5_predictions.jsonl",
+    "pred":  "outputs/predict_full_mwm_gpt5_5_samples-1-51-76_20260614_predictions.jsonl",
     "gold":  "data/sample_input.jsonl",
-    "output":  "outputs/eval_report.json",
+    "output":  "outputs/eval_full_mwm_judge_gpt5_5_samples-1-51-76_20260614_report.json",
     "config":  "configs/default.yaml",
     "skip_llm_judge":  false,
     "migrated_from_run_id":  "107ffe4ef370",
