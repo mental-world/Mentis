@@ -34,6 +34,7 @@ from mentis.schema import (
 from mentis.utils.concurrency_utils import gather_bounded
 from mentis.utils.tracing import RunLogger, sum_token_usage
 from mentis.utils.runtime_input import normalize_record, runtime_sample_from_input
+from mentis.utils.media_utils import video_frames_as_content
 
 
 @dataclass(frozen=True)
@@ -233,7 +234,10 @@ class MentisPipeline:
             if not oracle:
                 raise ValueError("oracle_state requires golden_answer.current_state_s_t")
             return WorldState.model_validate(oracle), {"source": "oracle", "call_count": 0}
-        state_input, media_scene = build_state_parser_input(sample)
+        state_input, media_scene = build_state_parser_input(
+            sample,
+            max_video_frames=int(self.config.raw.get("video", {}).get("max_frames", 8)),
+        )
         return await self.state_parser.parse(
             sample_id=context.sample_id,
             state_input=state_input,
@@ -443,11 +447,13 @@ def _branch_error_message(failed_branches: list[BranchResult]) -> str:
     return "; ".join(parts)
 
 
-def build_state_parser_input(sample: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+def build_state_parser_input(
+    sample: dict[str, Any], *, max_video_frames: int = 8
+) -> tuple[dict[str, Any], dict[str, Any]]:
     story = sample.get("story") if isinstance(sample.get("story"), dict) else {}
     key, value = _story_modality_item(story)
-    state_input = {"story": {key: value}}
-    media_scene = _state_media_scene(sample.get("_media_scene") or {}, key)
+    media_scene = _state_media_scene(sample.get("_media_scene") or {}, key, max_video_frames)
+    state_input = {"scene": _state_prompt_scene(key, value, media_scene)}
     return state_input, media_scene
 
 
@@ -462,15 +468,47 @@ def _story_modality_item(story: dict[str, Any]) -> tuple[str, Any]:
     )
 
 
-def _state_media_scene(media_scene: dict[str, Any], story_key: str) -> dict[str, Any]:
+def _state_prompt_scene(story_key: str, value: Any, media_scene: dict[str, Any]) -> dict[str, Any]:
+    if story_key == "images":
+        count = len(media_scene.get("image_paths") or [])
+        return {
+            "modality": "image",
+            "description": f"The current scene is presented as {count} ordered image(s).",
+            "image_count": count,
+            "ordered": True,
+        }
+    if story_key == "video":
+        frame_count = len(media_scene.get("video_frames") or [])
+        return {
+            "modality": "video",
+            "description": (
+                f"The current scene is presented as a video. "
+                f"{frame_count} ordered frame(s) have been sampled and attached as images."
+            ),
+            "sampled_frame_count": frame_count,
+            "ordered": True,
+        }
+    return {"text": value}
+
+
+def _state_media_scene(
+    media_scene: dict[str, Any], story_key: str, max_video_frames: int
+) -> dict[str, Any]:
     if story_key == "images":
         return {
             "image_paths": list(media_scene.get("image_paths") or []),
             "modality": "image",
         }
     if story_key == "video":
+        video_path = media_scene.get("video_path") or ""
+        frames = media_scene.get("video_frames")
+        if not isinstance(frames, list):
+            frames = []
+        if not frames and video_path:
+            frames, _ = video_frames_as_content(video_path, max_video_frames)
         return {
-            "video_path": media_scene.get("video_path") or "",
+            "video_path": video_path,
+            "video_frames": frames,
             "modality": "video",
         }
     return {"modality": "text"}

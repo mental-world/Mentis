@@ -27,7 +27,10 @@ def scene_to_openai_content(
         content.append({"type": "input_image", "image_url": _path_to_data_url(image_path)})
     video_path = scene.get("video_path")
     if video_path:
-        frames, errors = _video_frames_as_content(video_path, max_video_frames)
+        frames = scene.get("video_frames")
+        errors: list[str] = []
+        if not isinstance(frames, list) or not frames:
+            frames, errors = video_frames_as_content(video_path, max_video_frames)
         if not frames:
             diagnostics = f" Decoder diagnostics: {'; '.join(errors)}" if errors else ""
             raise ValueError(
@@ -39,6 +42,10 @@ def scene_to_openai_content(
             )
         content.extend(frames)
     return content
+
+
+def video_frames_as_content(path: str | Path, max_frames: int) -> tuple[list[dict[str, Any]], list[str]]:
+    return _video_frames_as_content(path, max_frames)
 
 
 def _path_to_data_url(path: str | Path) -> str:
