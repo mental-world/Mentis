@@ -106,18 +106,6 @@ For image samples, `story.images` lists image paths and `story.scene_context` an
 
 All knobs live in `config.yaml` (pass a custom file with `--config`): the model name, temperature, output-token budget, request concurrency, per-sample branch concurrency, retry policy, video frame budget, audio transcription, and the three scoring weights (mental consistency 0.45, physical plausibility 0.35, social appropriateness 0.20). The defaults reproduce the paper's operating point.
 
-## Results
-
-Average F1 (%) over the eight LLM world models evaluated in the paper, on the full 448-sample benchmark:
-
-| System | Avg. F1 |
-|---|---:|
-| Direct answer (same LLMs, no world modeling) | 63.3 |
-| + chain-of-thought | 74.6 |
-| **Mentis (full mental world modeling)** | **87.9** |
-| Human reference | 98.5 |
-
-See the paper for the full necessity ladder, oracle bottleneck analysis, scenario study, and modality analysis.
 
 ## Citation
 
