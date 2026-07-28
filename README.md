@@ -74,7 +74,7 @@ python run.py evaluate --predictions outputs/<run>/predictions.jsonl --gold data
 
 The evaluation dataset (448 situated decision scenarios: 320 text, 100 image, 28 sounding-video) is released separately on Hugging Face:
 
-**https://huggingface.co/datasets/[YOUR-ORG]/menti-bench**
+**https://huggingface.co/datasets/mental-world-model/menti-bench**
 
 Download the dataset repository (media files included), then point `--input` at a modality file; media paths resolve relative to the dataset root automatically:
 
