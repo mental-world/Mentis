@@ -1,5 +1,7 @@
-"""Mentis: a training-free Mental World Model baseline."""
+from .config import Settings, load_settings
+from .engine import MentisEngine
+from .llm import LLMClient
 
-__all__ = ["__version__"]
+__version__ = "1.0.0"
 
-__version__ = "0.1.0"
+__all__ = ["Settings", "load_settings", "MentisEngine", "LLMClient", "__version__"]

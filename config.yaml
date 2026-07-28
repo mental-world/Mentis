@@ -1,0 +1,15 @@
+model: gpt-5.5
+transcription_model: whisper-1
+temperature: null
+max_output_tokens: 16384
+max_concurrent_requests: 4
+branch_concurrency: 6
+max_retries: 3
+schema_retries: 1
+request_timeout_seconds: 300.0
+video_max_frames: 16
+transcribe_video_audio: true
+score_weights:
+  mentally_consistent: 0.45
+  physically_plausible: 0.35
+  socially_appropriate: 0.20
