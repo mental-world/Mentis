@@ -110,11 +110,14 @@ All knobs live in `config.yaml` (pass a custom file with `--config`): the model 
 ## Citation
 
 ```bibtex
-@article{mwm2026,
-  title   = {Mental World Modeling},
-  author  = {[AUTHORS]},
-  journal = {arXiv preprint arXiv:[XXXX.XXXXX]},
-  year    = {2026}
+@article{fei2026mwm,
+  title         = {Mental World Modeling},
+  author        = {Fei, Hao and Zhao, Yiran},
+  year          = {2026},
+  eprint        = {2607.27201},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2607.27201}
 }
 ```
 
