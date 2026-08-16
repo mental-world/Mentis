@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" width="190" alt="MWM logo"/>
+  <img src="assets/logo.png" width="100" alt="MWM logo"/>
 </p>
 
 <h1 align="center">Mental World Modeling</h1>
